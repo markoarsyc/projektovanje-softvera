@@ -4,7 +4,9 @@
  */
 package server;
 
+import controller.Controller;
 import java.net.Socket;
+import model.Zaposleni;
 import operacije.Operacija;
 import transfer.Receiver;
 import transfer.Request;
@@ -19,6 +21,7 @@ public class ClientThread extends Thread{
     private final Socket socket;
     private final Sender sender;
     private final Receiver receiver;
+    private Controller controller = Controller.getInstance();
       
     public ClientThread(Socket socket) {
         this.socket = socket;
@@ -33,8 +36,8 @@ public class ClientThread extends Thread{
             Response response = new Response();
             if (request == null) break;
             switch (request.getOperacija()) {
-                case Operacija.O1:
-                    
+                case Operacija.LOGIN_ZAPOSLENI:
+                    response.setParams(controller.vrati((Zaposleni)request.getParams()));
                     break;
                 case Operacija.O2:
                     

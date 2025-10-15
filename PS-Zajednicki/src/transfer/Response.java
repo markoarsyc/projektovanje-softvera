@@ -4,13 +4,14 @@
  */
 package transfer;
 
+import java.io.Serializable;
 import operacije.Operacija;
 
 /**
  *
  * @author Marko
  */
-public class Response {
+public class Response implements Serializable{
     Object params;
     Operacija operacija;
 

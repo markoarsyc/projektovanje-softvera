@@ -11,5 +11,5 @@ import java.io.Serializable;
  * @author Marko
  */
 public enum Operacija implements Serializable {
-    O1,O2,O3;
+    O1,O2,O3,LOGIN_ZAPOSLENI;
 }

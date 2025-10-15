@@ -16,7 +16,7 @@ public class DBBroker {
     private Connection connection;
 
     public void connect() {
-        String url = "jdbc:mysql://localhost:3306/projetovanj_softvera_projekat";
+        String url = "jdbc:mysql://localhost:3306/projektovanje_softvera_projekat";
         String user = "root";
         String password = "";
 

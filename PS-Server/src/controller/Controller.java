@@ -4,12 +4,17 @@
  */
 package controller;
 
+import baza.DBBroker;
+import domain.DomainObject;
+import operacije.VratiSO;
+
 /**
  *
  * @author Marko
  */
 public class Controller {
     private static Controller instance;
+    private DBBroker dbb;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -19,6 +24,15 @@ public class Controller {
     }
 
     private Controller() {
-        
+        dbb = new DBBroker();
+    }
+    
+    public <T extends DomainObject<T>> T vrati(T object) {
+        try {
+            return (T) new VratiSO<T>().execute(object);
+        } catch (Exception ex) {
+            System.out.println("Greska prilikom izvrsavanja vratiSO: " + ex.getMessage());
+        }
+        return null;
     }
 }

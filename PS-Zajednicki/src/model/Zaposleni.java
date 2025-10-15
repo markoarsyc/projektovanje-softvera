@@ -159,9 +159,9 @@ public class Zaposleni implements Serializable, DomainObject<Zaposleni> {
     @Override
     public String getSelectQuery() {
         if (idZaposleni == 0) {
-            return "SELECT id, ime, prezime, email, lozinka, datumZaposlenja FROM zaposleni WHERE email = ? AND lozinka = ?";
+            return "SELECT idZaposleni, ime, prezime, email, lozinka, datumZaposlenja FROM zaposleni WHERE email = ? AND lozinka = ?";
         } else {
-            return "SELECT id, ime, prezime, email, lozinka, datumZaposlenja FROM zaposleni WHERE idZapoleni = ?";
+            return "SELECT idZaposleni, ime, prezime, email, lozinka, datumZaposlenja FROM zaposleni WHERE idZapoleni = ?";
         }
     }
 
