@@ -13,12 +13,13 @@ import model.Zaposleni;
  * @author Marko
  */
 public class ZaposleniLoginForma extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form ZaposleniGlavnaForma
      */
     private final Communication communication = Communication.getInstance();
     private ZaposleniGlavnaForma gf;
+
     public ZaposleniLoginForma() {
         initComponents();
         setTitle("Prijava Zaposleni");
@@ -109,11 +110,12 @@ public class ZaposleniLoginForma extends javax.swing.JFrame {
         zaposleni.setLozinka(password);
         Zaposleni ulogovani = communication.login(zaposleni);
         if (ulogovani != null) {
+            JOptionPane.showMessageDialog(this, "Email i lozinka su ispravni", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
             gf = new ZaposleniGlavnaForma(ulogovani);
             gf.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Greska", "Doslo je do greske prilikom prijavljivanja", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email i lozinka nisu ispravni", "Greska", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPrijavaActionPerformed
 

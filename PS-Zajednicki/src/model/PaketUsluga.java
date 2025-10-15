@@ -27,6 +27,12 @@ public class PaketUsluga implements Serializable, DomainObject<PaketUsluga> {
     public PaketUsluga() {
     }
 
+    public PaketUsluga(TipPaketaUsluga tip, String nazivPaketa, double cenaMesec) {
+        this.tip = tip;
+        this.nazivPaketa = nazivPaketa;
+        this.cenaMesec = cenaMesec;
+    }
+
     public PaketUsluga(int idPaketUsluga, TipPaketaUsluga tip, String nazivPaketa, double cenaMesec) {
         this.idPaketUsluga = idPaketUsluga;
         this.tip = tip;

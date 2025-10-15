@@ -6,6 +6,8 @@ package communication;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
+import model.PaketUsluga;
 import model.Zaposleni;
 import operacije.Operacija;
 import transfer.Receiver;
@@ -47,5 +49,19 @@ public class Communication {
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (Zaposleni) response.getParams();
+    }
+    
+    public List<PaketUsluga> vratiSvePakete() {
+        Request request = new Request(null, Operacija.VRATI_SVE_PAKETE_USLUGA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<PaketUsluga>) response.getParams();
+    }
+    
+    public int dodajPaketUsluga(PaketUsluga paket) {
+        Request request = new Request(paket, Operacija.DODAJ_PAKET_USLUGA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
     }
 }

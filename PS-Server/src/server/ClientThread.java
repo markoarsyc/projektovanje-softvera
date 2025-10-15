@@ -6,6 +6,7 @@ package server;
 
 import controller.Controller;
 import java.net.Socket;
+import model.PaketUsluga;
 import model.Zaposleni;
 import operacije.Operacija;
 import transfer.Receiver;
@@ -39,11 +40,11 @@ public class ClientThread extends Thread{
                 case Operacija.LOGIN_ZAPOSLENI:
                     response.setParams(controller.vrati((Zaposleni)request.getParams()));
                     break;
-                case Operacija.O2:
-                    
+                case Operacija.VRATI_SVE_PAKETE_USLUGA:
+                    response.setParams(controller.vratiSve(new PaketUsluga()));
                     break;
-                case Operacija.O3:
-                    
+                case Operacija.DODAJ_PAKET_USLUGA:
+                    response.setParams(controller.dodaj((PaketUsluga) request.getParams()));
                     break;
                 default:
                     throw new AssertionError();
