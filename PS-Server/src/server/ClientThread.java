@@ -46,6 +46,12 @@ public class ClientThread extends Thread{
                 case Operacija.DODAJ_PAKET_USLUGA:
                     response.setParams(controller.dodaj((PaketUsluga) request.getParams()));
                     break;
+                case Operacija.IZMENI_PAKET_USLUGA:
+                    response.setParams(controller.izmeni((PaketUsluga) request.getParams()));
+                    break;
+                case Operacija.OBRISI_PAKET_USLUGA:
+                    response.setParams(controller.obrisi((PaketUsluga) request.getParams()));
+                    break;
                 default:
                     throw new AssertionError();
             }

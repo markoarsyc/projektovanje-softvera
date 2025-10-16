@@ -26,7 +26,7 @@ public class Communication {
     private Sender sender;
     private static Communication instance;
 
-    public static Communication getInstance(){
+    public static Communication getInstance() {
         if (instance == null) {
             instance = new Communication();
         }
@@ -42,7 +42,7 @@ public class Communication {
             System.out.println("Greska prilikom povezivanja na server: " + ex.getMessage());
         }
     }
-    
+
     //Operacije
     public Zaposleni login(Zaposleni zaposleni) {
         Request request = new Request(zaposleni, Operacija.LOGIN_ZAPOSLENI);
@@ -50,16 +50,30 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (Zaposleni) response.getParams();
     }
-    
+
     public List<PaketUsluga> vratiSvePakete() {
         Request request = new Request(null, Operacija.VRATI_SVE_PAKETE_USLUGA);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (List<PaketUsluga>) response.getParams();
     }
-    
+
     public int dodajPaketUsluga(PaketUsluga paket) {
         Request request = new Request(paket, Operacija.DODAJ_PAKET_USLUGA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int izmeniPaketUsluga(PaketUsluga paket) {
+        Request request = new Request(paket, Operacija.IZMENI_PAKET_USLUGA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+    
+    public int obrisiPaketUsluga(PaketUsluga paket) {
+        Request request = new Request(paket, Operacija.OBRISI_PAKET_USLUGA);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (int) response.getParams();

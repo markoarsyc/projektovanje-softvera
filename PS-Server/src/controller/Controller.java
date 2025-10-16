@@ -7,7 +7,9 @@ package controller;
 import baza.DBBroker;
 import domain.DomainObject;
 import java.util.List;
+import operacije.IzmeniSO;
 import operacije.KreirajSO;
+import operacije.ObrisiSO;
 import operacije.VratiSO;
 import operacije.VratiSveSO;
 
@@ -53,6 +55,23 @@ public class Controller {
             return (int) new KreirajSO<T>().execute(object);
         } catch (Exception ex) {
             System.out.println("Greska prilikom izvrsavanja dodajSO: " + ex.getMessage());
+        }
+        return 0;
+    }
+    
+    public <T extends DomainObject<T>> int izmeni(T object) {
+        try {
+            return (int) new IzmeniSO<T>().execute(object);
+        } catch (Exception ex) {
+            System.out.println("Greska prilikom izvrsavanja izmeniSO: " + ex.getMessage());
+        }
+        return 0;
+    }
+    public <T extends DomainObject<T>> int obrisi(T object) {
+        try {
+            return (int) new ObrisiSO<T>().execute(object);
+        } catch (Exception ex) {
+            System.out.println("Greska prilikom izvrsavanja obrisiSO: " + ex.getMessage());
         }
         return 0;
     }

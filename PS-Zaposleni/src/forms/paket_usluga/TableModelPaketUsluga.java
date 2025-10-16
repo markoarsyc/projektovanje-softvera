@@ -51,6 +51,10 @@ public class TableModelPaketUsluga extends AbstractTableModel {
     public String getColumnName(int column) {
         return kolone[column];
     }
+
+    public List<PaketUsluga> getPaketi() {
+        return paketi;
+    }
     
     
     

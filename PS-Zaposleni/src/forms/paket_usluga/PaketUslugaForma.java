@@ -6,6 +6,7 @@ package forms.paket_usluga;
 
 import communication.Communication;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.PaketUsluga;
 
 /**
@@ -19,13 +20,14 @@ public class PaketUslugaForma extends javax.swing.JFrame {
      */
     private Communication communication = Communication.getInstance();
     private DodajIzmeniPaketUslugaForma formaPaketDodajIzmeni;
+
     public PaketUslugaForma() {
         initComponents();
         setTitle("Forma za rad sa paketima usluga");
         setLocationRelativeTo(null);
         popuniTabeluPaketiUsluga();
     }
-    
+
     public void popuniTabeluPaketiUsluga() {
         List<PaketUsluga> paketi = communication.vratiSvePakete();
         if (paketi != null) {
@@ -73,10 +75,25 @@ public class PaketUslugaForma extends javax.swing.JFrame {
         });
 
         btnIzmeni.setText("Izmeni");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
 
         btnObrisi.setText("Obrisi");
+        btnObrisi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiActionPerformed(evt);
+            }
+        });
 
         btnKrajRada.setText("Kraj rada");
+        btnKrajRada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKrajRadaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,9 +131,45 @@ public class PaketUslugaForma extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
-        formaPaketDodajIzmeni = new DodajIzmeniPaketUslugaForma(this);
+        formaPaketDodajIzmeni = new DodajIzmeniPaketUslugaForma(this, null);
         formaPaketDodajIzmeni.setVisible(true);
     }//GEN-LAST:event_btnDodajActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        TableModelPaketUsluga tmpu = (TableModelPaketUsluga) tblPaketUsluga.getModel();
+        int red = tblPaketUsluga.getSelectedRow();
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        PaketUsluga paket = tmpu.getPaketi().get(red);
+        formaPaketDodajIzmeni = new DodajIzmeniPaketUslugaForma(this, paket);
+        formaPaketDodajIzmeni.setVisible(true);
+    }//GEN-LAST:event_btnIzmeniActionPerformed
+
+    private void btnKrajRadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKrajRadaActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnKrajRadaActionPerformed
+
+    private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
+        TableModelPaketUsluga tmpu = (TableModelPaketUsluga) tblPaketUsluga.getModel();
+        int red = tblPaketUsluga.getSelectedRow();
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        PaketUsluga paket = tmpu.getPaketi().get(red);
+        int choice = JOptionPane.showConfirmDialog(this, "Da li ste sigurni da zelite da obrisete paket?", "Brisanje", JOptionPane.YES_NO_OPTION);
+        if (choice == 0) {
+            int result = communication.obrisiPaketUsluga(paket);
+            if (result == 0) {
+                JOptionPane.showMessageDialog(this, "Doslo je do greske prilikom brisanja paketa", "Greska", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Brisanje paketa uspesno izvrseno", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            }
+            popuniTabeluPaketiUsluga();
+        }
+    }//GEN-LAST:event_btnObrisiActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;

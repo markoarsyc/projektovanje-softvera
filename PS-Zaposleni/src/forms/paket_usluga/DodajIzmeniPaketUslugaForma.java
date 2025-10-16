@@ -21,12 +21,28 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
      */
     private Communication communication = Communication.getInstance();
     private PaketUslugaForma glavnaFormaPaketUsluga;
+    private PaketUsluga paket;
 
-    public DodajIzmeniPaketUslugaForma(PaketUslugaForma glavnaFormaPaketUsluga) {
+    public DodajIzmeniPaketUslugaForma(PaketUslugaForma glavnaFormaPaketUsluga, PaketUsluga paket) {
         this.glavnaFormaPaketUsluga = glavnaFormaPaketUsluga;
+        this.paket = paket;
         initComponents();
         setTitle("Forma za dodavanje i izmenu paketa usluga");
         setLocationRelativeTo(null);
+        showHideButtons();
+    }
+
+    private void showHideButtons() {
+        if (paket == null) {
+            btnIzmeni.setVisible(false);
+            btnDodajPaket.setVisible(true);
+        } else {
+            btnIzmeni.setVisible(true);
+            btnDodajPaket.setVisible(false);
+            txtCenaMesec.setText(String.valueOf(paket.getCenaMesec()));
+            txtNazivPaketa.setText(paket.getNazivPaketa());
+            cbTipoviPaketa.setSelectedItem(paket.getTip());
+        }
     }
 
     /**
@@ -45,6 +61,8 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCenaMesec = new javax.swing.JTextField();
         btnDodajPaket = new javax.swing.JButton();
+        btnOdustani = new javax.swing.JButton();
+        btnIzmeni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +78,20 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
         btnDodajPaket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDodajPaketActionPerformed(evt);
+            }
+        });
+
+        btnOdustani.setText("Odustani");
+        btnOdustani.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOdustaniActionPerformed(evt);
+            }
+        });
+
+        btnIzmeni.setText("Izmeni paket");
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
             }
         });
 
@@ -79,11 +111,14 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDodajPaket)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtNazivPaketa)
                         .addComponent(cbTipoviPaketa, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtCenaMesec, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
+                        .addComponent(txtCenaMesec, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnOdustani, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnIzmeni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDodajPaket, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -103,7 +138,11 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
                     .addComponent(txtCenaMesec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(btnDodajPaket)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIzmeni)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(btnOdustani)
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -138,8 +177,43 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDodajPaketActionPerformed
 
+    private void btnOdustaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOdustaniActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnOdustaniActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        String noviNaziv = txtNazivPaketa.getText();
+        if (noviNaziv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Paket mora imati naziv", "Greska", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        double novaCena = 0;
+        try {
+            novaCena = Double.parseDouble(txtCenaMesec.getText());
+            if (novaCena < 0) {
+                JOptionPane.showMessageDialog(this, "Cena mora biti pozitivan broj", "Greska", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cena mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        TipPaketaUsluga noviTip = (TipPaketaUsluga) cbTipoviPaketa.getSelectedItem();
+        PaketUsluga noviPaket = new PaketUsluga(paket.getIdPaketUsluga(), noviTip, noviNaziv, novaCena);
+        int result = communication.izmeniPaketUsluga(noviPaket);
+        if (result == 0) {
+            JOptionPane.showMessageDialog(this, "Greska prilikom dodavanja paketa", "Greska", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Uspesna izmena paketa", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            glavnaFormaPaketUsluga.popuniTabeluPaketiUsluga();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnIzmeniActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajPaket;
+    private javax.swing.JButton btnIzmeni;
+    private javax.swing.JButton btnOdustani;
     private javax.swing.JComboBox<model.TipPaketaUsluga> cbTipoviPaketa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

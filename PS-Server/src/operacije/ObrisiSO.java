@@ -22,7 +22,7 @@ public class ObrisiSO<T extends DomainObject<T>> extends AbstractSystemOperation
 
     @Override
     protected Object executeOperation(DomainObject object) throws Exception {
-        return (boolean) dbb.delete(object);
+        return (int) dbb.delete(object);
     }
 
 }
