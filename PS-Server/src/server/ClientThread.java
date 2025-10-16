@@ -6,6 +6,7 @@ package server;
 
 import controller.Controller;
 import java.net.Socket;
+import model.KategorijaKlijenta;
 import model.PaketUsluga;
 import model.Zaposleni;
 import operacije.Operacija;
@@ -18,12 +19,13 @@ import transfer.Sender;
  *
  * @author Marko
  */
-public class ClientThread extends Thread{
+public class ClientThread extends Thread {
+
     private final Socket socket;
     private final Sender sender;
     private final Receiver receiver;
     private Controller controller = Controller.getInstance();
-      
+
     public ClientThread(Socket socket) {
         this.socket = socket;
         sender = new Sender(socket);
@@ -35,10 +37,12 @@ public class ClientThread extends Thread{
         while (socket != null && !socket.isClosed()) {
             Request request = (Request) receiver.receive();
             Response response = new Response();
-            if (request == null) break;
+            if (request == null) {
+                break;
+            }
             switch (request.getOperacija()) {
                 case Operacija.LOGIN_ZAPOSLENI:
-                    response.setParams(controller.vrati((Zaposleni)request.getParams()));
+                    response.setParams(controller.vrati((Zaposleni) request.getParams()));
                     break;
                 case Operacija.VRATI_SVE_PAKETE_USLUGA:
                     response.setParams(controller.vratiSve(new PaketUsluga()));
@@ -52,13 +56,24 @@ public class ClientThread extends Thread{
                 case Operacija.OBRISI_PAKET_USLUGA:
                     response.setParams(controller.obrisi((PaketUsluga) request.getParams()));
                     break;
+                case Operacija.VRATI_SVE_KATEGORIJE_KLIJENTA:
+                    response.setParams(controller.vratiSve(new KategorijaKlijenta()));
+                    break;
+                case Operacija.DODAJ_KATEGORIJU_KLIJENTA:
+                    response.setParams(controller.dodaj((KategorijaKlijenta) request.getParams()));
+                    break;
+                case Operacija.IZMENI_KATEGORIJU_KLIJENTA:
+                    response.setParams(controller.izmeni((KategorijaKlijenta) request.getParams()));
+                    break;
+                case Operacija.OBRISI_KATEGORIJU_KLIJENTA:
+                    response.setParams(controller.obrisi((KategorijaKlijenta) request.getParams()));
+                    break;
                 default:
                     throw new AssertionError();
             }
-            
+
             sender.send(response);
         }
     }
-    
-    
+
 }

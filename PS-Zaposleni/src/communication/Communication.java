@@ -7,6 +7,7 @@ package communication;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
+import model.KategorijaKlijenta;
 import model.PaketUsluga;
 import model.Zaposleni;
 import operacije.Operacija;
@@ -44,6 +45,8 @@ public class Communication {
     }
 
     //Operacije
+    
+    //Zaposleni
     public Zaposleni login(Zaposleni zaposleni) {
         Request request = new Request(zaposleni, Operacija.LOGIN_ZAPOSLENI);
         sender.send(request);
@@ -51,6 +54,7 @@ public class Communication {
         return (Zaposleni) response.getParams();
     }
 
+    //Paket usluga
     public List<PaketUsluga> vratiSvePakete() {
         Request request = new Request(null, Operacija.VRATI_SVE_PAKETE_USLUGA);
         sender.send(request);
@@ -71,11 +75,41 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
     }
-    
+
     public int obrisiPaketUsluga(PaketUsluga paket) {
         Request request = new Request(paket, Operacija.OBRISI_PAKET_USLUGA);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
     }
+
+    //Kategorija klijenta
+    public List<KategorijaKlijenta> vratiSveKategorijeKlijenta() {
+        Request request = new Request(null, Operacija.VRATI_SVE_KATEGORIJE_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<KategorijaKlijenta>) response.getParams();
+    }
+
+    public int dodajKategorijuKlijenta(KategorijaKlijenta kategorija) {
+        Request request = new Request(kategorija, Operacija.DODAJ_KATEGORIJU_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int izmeniKategorijuKlijenta(KategorijaKlijenta kategorija) {
+        Request request = new Request(kategorija, Operacija.IZMENI_KATEGORIJU_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int obrisiKategorijuKlijenta(KategorijaKlijenta kategorija) {
+        Request request = new Request(kategorija, Operacija.OBRISI_KATEGORIJU_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
 }

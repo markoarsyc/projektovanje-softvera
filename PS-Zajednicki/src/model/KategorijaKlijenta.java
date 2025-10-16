@@ -25,6 +25,11 @@ public class KategorijaKlijenta implements Serializable, DomainObject<Kategorija
 
     public KategorijaKlijenta() {
     }
+    
+    public KategorijaKlijenta(String naziv, int procenatPopusta) {
+        this.naziv = naziv;
+        this.procenatPopusta = procenatPopusta;
+    }
 
     public KategorijaKlijenta(int idKategorijaKlijenta, String naziv, int procenatPopusta) {
         this.idKategorijaKlijenta = idKategorijaKlijenta;
