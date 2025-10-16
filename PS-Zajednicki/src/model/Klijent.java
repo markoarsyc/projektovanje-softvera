@@ -29,6 +29,15 @@ public class Klijent implements Serializable, DomainObject<Klijent> {
 
     public Klijent() {
     }
+    
+    public Klijent(String ime, String prezime, String email, String lozinka, String telefon, KategorijaKlijenta kategorija) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.email = email;
+        this.lozinka = lozinka;
+        this.telefon = telefon;
+        this.kategorija = kategorija;
+    }
 
     public Klijent(int idKlijent, String ime, String prezime, String email, String lozinka, String telefon, KategorijaKlijenta kategorija) {
         this.idKlijent = idKlijent;
@@ -95,8 +104,6 @@ public class Klijent implements Serializable, DomainObject<Klijent> {
     public void setKategorija(KategorijaKlijenta kategorija) {
         this.kategorija = kategorija;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -197,7 +204,7 @@ public class Klijent implements Serializable, DomainObject<Klijent> {
             String email = rs.getString("k.email");
             String lozinka = rs.getString("k.lozinka");
             String telefon = rs.getString("k.telefon");
-            
+
             //Kategorija
             int idKategorijaKlijenta = rs.getInt("kk.idKategorijaKlijenta");
             String naziv = rs.getString("kk.naziv");
@@ -229,7 +236,7 @@ public class Klijent implements Serializable, DomainObject<Klijent> {
             String email = rs.getString("k.email");
             String lozinka = rs.getString("k.lozinka");
             String telefon = rs.getString("k.telefon");
-            
+
             //Kategorija
             int idKategorijaKlijenta = rs.getInt("kk.idKategorijaKlijenta");
             String naziv = rs.getString("kk.naziv");

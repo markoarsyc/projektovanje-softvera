@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
 import model.KategorijaKlijenta;
+import model.Klijent;
 import model.PaketUsluga;
 import model.Zaposleni;
 import operacije.Operacija;
@@ -45,7 +46,6 @@ public class Communication {
     }
 
     //Operacije
-    
     //Zaposleni
     public Zaposleni login(Zaposleni zaposleni) {
         Request request = new Request(zaposleni, Operacija.LOGIN_ZAPOSLENI);
@@ -107,6 +107,35 @@ public class Communication {
 
     public int obrisiKategorijuKlijenta(KategorijaKlijenta kategorija) {
         Request request = new Request(kategorija, Operacija.OBRISI_KATEGORIJU_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    //Klijent
+    public List<Klijent> vratiSveKlijente() {
+        Request request = new Request(null, Operacija.VRATI_SVE_KLIJENTE);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<Klijent>) response.getParams();
+    }
+
+    public int dodajKlijenta(Klijent klijent) {
+        Request request = new Request(klijent, Operacija.DODAJ_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int izmeniKlijenta(Klijent klijent) {
+        Request request = new Request(klijent, Operacija.IZMENI_KLIJENTA);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int obrisiKlijenta(Klijent klijent) {
+        Request request = new Request(klijent, Operacija.OBRISI_KLIJENTA);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (int) response.getParams();

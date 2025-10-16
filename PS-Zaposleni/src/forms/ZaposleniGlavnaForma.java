@@ -5,6 +5,7 @@
 package forms;
 
 import forms.kategorija_klijenta.KategorijaKlijentaForma;
+import forms.klijent.KlijentForma;
 import forms.paket_usluga.PaketUslugaForma;
 import model.Zaposleni;
 
@@ -20,6 +21,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
     private Zaposleni zaposleni;
     private PaketUslugaForma formaPaketUsluga;
     private KategorijaKlijentaForma formaKategorijaKlijenta;
+    private KlijentForma formaKlijent;
     public ZaposleniGlavnaForma(Zaposleni zaposleni) {
         initComponents();
         this.zaposleni = zaposleni;
@@ -38,6 +40,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
 
         btnPaketUsluga = new javax.swing.JButton();
         btnKategorijeKlijenata = new javax.swing.JButton();
+        btnKlijent = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,6 +58,13 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             }
         });
 
+        btnKlijent.setText("Klijent");
+        btnKlijent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKlijentActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,7 +73,8 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                    .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -73,7 +84,9 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
                 .addComponent(btnPaketUsluga)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKategorijeKlijenata)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnKlijent)
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
         pack();
@@ -89,8 +102,14 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         formaKategorijaKlijenta.setVisible(true);
     }//GEN-LAST:event_btnKategorijeKlijenataActionPerformed
 
+    private void btnKlijentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKlijentActionPerformed
+        formaKlijent = new KlijentForma();
+        formaKlijent.setVisible(true);
+    }//GEN-LAST:event_btnKlijentActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKategorijeKlijenata;
+    private javax.swing.JButton btnKlijent;
     private javax.swing.JButton btnPaketUsluga;
     // End of variables declaration//GEN-END:variables
 }
