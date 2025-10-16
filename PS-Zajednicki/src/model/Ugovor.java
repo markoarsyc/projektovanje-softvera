@@ -27,11 +27,12 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
     private LocalDate datumIsteka;
     private int trajanjeMeseci;
     private double ukupnaCena;
+    private StatusUgovora status;
 
     public Ugovor() {
     }
 
-    public Ugovor(int idUgovor, Zaposleni zaposleni, Klijent klijent, LocalDate datumPocetka, LocalDate datumIsteka, int trajanjeMeseci, double ukupnaCena) {
+    public Ugovor(int idUgovor, Zaposleni zaposleni, Klijent klijent, LocalDate datumPocetka, LocalDate datumIsteka, int trajanjeMeseci, double ukupnaCena, StatusUgovora status) {
         this.idUgovor = idUgovor;
         this.zaposleni = zaposleni;
         this.klijent = klijent;
@@ -39,6 +40,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
         this.datumIsteka = datumIsteka;
         this.trajanjeMeseci = trajanjeMeseci;
         this.ukupnaCena = ukupnaCena;
+        this.status = status;
     }
 
     public int getIdUgovor() {
@@ -97,6 +99,16 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
         this.ukupnaCena = ukupnaCena;
     }
 
+    public StatusUgovora getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusUgovora status) {
+        this.status = status;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -120,12 +132,12 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
 
     @Override
     public String toString() {
-        return "Ugovor{" + "idUgovor=" + idUgovor + ", zaposleni=" + zaposleni + ", klijent=" + klijent + ", datumPocetka=" + datumPocetka + ", datumIsteka=" + datumIsteka + ", trajanjeMeseci=" + trajanjeMeseci + ", ukupnaCena=" + ukupnaCena + '}';
+        return "Ugovor{" + "idUgovor=" + idUgovor + ", zaposleni=" + zaposleni + ", klijent=" + klijent + ", datumPocetka=" + datumPocetka + ", datumIsteka=" + datumIsteka + ", trajanjeMeseci=" + trajanjeMeseci + ", ukupnaCena=" + ukupnaCena + ", status=" + status + '}';
     }
 
     @Override
     public String getInsertQuery() {
-        return "INSERT INTO ugovor (zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena) VALUES (?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO ugovor (zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
@@ -136,11 +148,12 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
         ps.setDate(4, Date.valueOf(datumIsteka));
         ps.setInt(5, trajanjeMeseci);
         ps.setDouble(6, ukupnaCena);
+        ps.setString(7, status.name());
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE ugovor SET zaposleni=?, klijent=?, datumPocetka=?, datumIsteka=?, trajanjeMeseci=?, ukupnaCena=? WHERE idUgovor=?";
+        return "UPDATE ugovor SET zaposleni=?, klijent=?, datumPocetka=?, datumIsteka=?, trajanjeMeseci=?, ukupnaCena=?, status=? WHERE idUgovor=?";
     }
 
     @Override
@@ -151,7 +164,8 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
         ps.setDate(4, Date.valueOf(datumIsteka));
         ps.setInt(5, trajanjeMeseci);
         ps.setDouble(6, ukupnaCena);
-        ps.setInt(7, idUgovor);
+        ps.setString(7, status.name());
+        ps.setInt(8, idUgovor);
     }
 
     @Override
@@ -189,6 +203,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
             LocalDate datumIsteka = rs.getDate("u.datumIsteka").toLocalDate();
             int trajanjeMeseci = rs.getInt("u.trajanjeMeseci");
             double ukupnaCena = rs.getDouble("u.ukupnaCena");
+            StatusUgovora status = StatusUgovora.valueOf(rs.getString("u.status"));
             
             //Zaposleni
             int idZaposleni = rs.getInt("z.idZaposleni");
@@ -216,7 +231,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
             
             Klijent klijent = new Klijent(idKlijent, imeK, prezimeK, emailK, lozinkaK, telefon, kategorija);
             
-            return new Ugovor(idUgovor, zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena);  
+            return new Ugovor(idUgovor, zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena, status);  
         }
         return null;
     }
@@ -246,6 +261,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
             LocalDate datumIsteka = rs.getDate("u.datumIsteka").toLocalDate();
             int trajanjeMeseci = rs.getInt("u.trajanjeMeseci");
             double ukupnaCena = rs.getDouble("u.ukupnaCena");
+            StatusUgovora status = StatusUgovora.valueOf(rs.getString("u.status"));
             
             //Zaposleni
             int idZaposleni = rs.getInt("z.idZaposleni");
@@ -273,7 +289,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
             
             Klijent klijent = new Klijent(idKlijent, imeK, prezimeK, emailK, lozinkaK, telefon, kategorija);
             
-            lista.add(new Ugovor(idUgovor, zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena));
+            lista.add(new Ugovor(idUgovor, zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena, status));
         }
         return lista;
     }
