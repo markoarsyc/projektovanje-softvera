@@ -32,14 +32,16 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
     /**
      * Creates new form KreirajUgovorForma
      */
+    private Ugovor ugovor;
     private Zaposleni zaposleni;
     private Klijent klijent;
     private Communication communication = Communication.getInstance();
     private List<StavkaUgovora> stavkeUgovora = new ArrayList<>();
 
-    public KreirajUgovorForma(Zaposleni zaposleni, Klijent klijent) {
+    public KreirajUgovorForma(Zaposleni zaposleni, Klijent klijent, Ugovor ugovor) {
         this.zaposleni = zaposleni;
         this.klijent = klijent;
+        this.ugovor = ugovor;
         initComponents();
         setTitle("Forma za kreiranje ugovora");
         setLocationRelativeTo(null);
@@ -61,6 +63,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
     private void popuniInicijalnimPodacima() {
         popuniTabeluStavkeUgovora();
+        btnIzmeniStatus.setVisible(false);
         cbTipPaketaUsluga.setSelectedIndex(-1);
         cbPaketiUsluga.setEnabled(false);
         cbPaketiUsluga.setSelectedIndex(-1);
@@ -93,6 +96,40 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
         //Ukupna cena
         txtCena.setEnabled(false);
+        
+        if (ugovor != null) {
+            popuniZaIzmeni();
+        }
+    }
+    
+    private void popuniTabeluStavkeIzmena() {
+        List<StavkaUgovora> stavke = communication.vratiSveStavke();
+        List<StavkaUgovora> stavkeZaOdredjeni = new ArrayList<>();
+        for (StavkaUgovora s : stavke) {
+            if(s.getUgovor().getIdUgovor() == ugovor.getIdUgovor()) {
+                stavkeZaOdredjeni.add(s);
+            }
+        }
+        TableModelStavkaUgovora tmsu = new TableModelStavkaUgovora(stavkeZaOdredjeni);
+        tblStavkeUgovora.setModel(tmsu);
+    }
+    
+    private void popuniZaIzmeni() {
+        btnIzmeniStatus.setVisible(true);
+        btnKreirajUgovor.setVisible(false);
+        btnRucniUnos.setVisible(false);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        txtDatumPocetka.setText(ugovor.getDatumPocetka().format(formatter));
+        txtDatumIsteka.setText(ugovor.getDatumIsteka().format(formatter));
+        popuniTabeluStavkeIzmena();
+        cbTipPaketaUsluga.setVisible(false);
+        cbPaketiUsluga.setVisible(false);
+        lblTipPaketa.setVisible(false);
+        lblPaket.setVisible(false);
+        btnDodajStavku.setVisible(false);
+        btnUkloniStavku.setVisible(false);
+        cbStatusUgovora.setEnabled(true);
+        txtCena.setText(String.valueOf(ugovor.getUkupnaCena()));
     }
 
     /**
@@ -119,8 +156,8 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblStavkeUgovora = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblTipPaketa = new javax.swing.JLabel();
+        lblPaket = new javax.swing.JLabel();
         cbPaketiUsluga = new javax.swing.JComboBox<>();
         cbTipPaketaUsluga = new javax.swing.JComboBox<>();
         btnDodajStavku = new javax.swing.JButton();
@@ -133,6 +170,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         btnKreirajUgovor = new javax.swing.JButton();
         btnOdustani = new javax.swing.JButton();
         cbStatusUgovora = new javax.swing.JComboBox<>();
+        btnIzmeniStatus = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,9 +207,9 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblStavkeUgovora);
 
-        jLabel7.setText("Tip paketa usluga:");
+        lblTipPaketa.setText("Tip paketa usluga:");
 
-        jLabel8.setText("Paket:");
+        lblPaket.setText("Paket:");
 
         cbTipPaketaUsluga.setModel(new DefaultComboBoxModel<>(TipPaketaUsluga.values())
         );
@@ -219,6 +257,13 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         cbStatusUgovora.setModel(new DefaultComboBoxModel<>(StatusUgovora.values())
         );
 
+        btnIzmeniStatus.setText("Izmeni status");
+        btnIzmeniStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniStatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -229,17 +274,6 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCena)
-                            .addComponent(cbStatusUgovora, 0, 148, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnKreirajUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(172, 172, 172))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -267,8 +301,8 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblTipPaketa, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblPaket, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cbPaketiUsluga, 0, 384, Short.MAX_VALUE)
@@ -277,13 +311,23 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                                         .addComponent(btnDodajStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnUkloniStavku, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnIzmeniStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135)
+                                .addComponent(btnOdustani, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbStatusUgovora, 0, 256, Short.MAX_VALUE)
+                                    .addComponent(txtCena))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnKreirajUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(270, 270, 270)
-                .addComponent(btnOdustani, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,11 +361,11 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(lblTipPaketa)
                     .addComponent(cbTipPaketaUsluga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
+                    .addComponent(lblPaket)
                     .addComponent(cbPaketiUsluga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -331,9 +375,9 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(cbStatusUgovora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -341,9 +385,13 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(txtCena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnKreirajUgovor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(btnOdustani)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(btnKreirajUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnOdustani)
+                    .addComponent(btnIzmeniStatus))
                 .addGap(29, 29, 29))
         );
 
@@ -453,8 +501,21 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnKreirajUgovorActionPerformed
 
+    private void btnIzmeniStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniStatusActionPerformed
+        StatusUgovora noviStatusUgovora = (StatusUgovora) cbStatusUgovora.getSelectedItem();
+        ugovor.setStatus(noviStatusUgovora);
+        int result = communication.izmeniUgovor(ugovor);
+        if (result == 0) {
+            JOptionPane.showMessageDialog(this, "Greska prilikom izmene ugovora", "Greska", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Status ugovora uspesno izmenjen", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnIzmeniStatusActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajStavku;
+    private javax.swing.JButton btnIzmeniStatus;
     private javax.swing.JButton btnKreirajUgovor;
     private javax.swing.JButton btnOdustani;
     private javax.swing.JButton btnRucniUnos;
@@ -470,12 +531,12 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblPaket;
+    private javax.swing.JLabel lblTipPaketa;
     private javax.swing.JTable tblStavkeUgovora;
     private javax.swing.JTextField txtCena;
     private javax.swing.JTextField txtDatumIsteka;

@@ -10,6 +10,8 @@ import java.util.List;
 import model.KategorijaKlijenta;
 import model.Klijent;
 import model.PaketUsluga;
+import model.StavkaUgovora;
+import model.Ugovor;
 import model.Zaposleni;
 import model.helper.UgovorSaStavkama;
 import operacije.Operacija;
@@ -145,6 +147,27 @@ public class Communication {
     //Ugovor
     public int dodajUgovorSaStavkama(UgovorSaStavkama ugovorSaStavkama) {
         Request request = new Request(ugovorSaStavkama, Operacija.DODAJ_UGOVOR);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+    
+    public List<Ugovor> vratiSveUgovore() {
+        Request request = new Request(null, Operacija.VRATI_SVE_UGOVORE);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<Ugovor>) response.getParams();
+    }
+    
+    public List<StavkaUgovora> vratiSveStavke() {
+        Request request = new Request(null, Operacija.VRATI_SVE_STAVKE);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<StavkaUgovora>) response.getParams();
+    }
+    
+    public int izmeniUgovor(Ugovor ugovor) {
+        Request request = new Request(ugovor, Operacija.IZMENI_UGOVOR);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (int) response.getParams();

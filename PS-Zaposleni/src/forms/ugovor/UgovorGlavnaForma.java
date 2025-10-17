@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Klijent;
+import model.Ugovor;
 import model.Zaposleni;
 
 /**
@@ -31,6 +32,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
         setTitle("Forma za rad sa ugovorima");
         setLocationRelativeTo(null);
         popuniTabeluKlijenti();
+        osveziTabeluUgovori();
     }
 
     private void popuniTabeluKlijenti() {
@@ -39,6 +41,11 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
             TableModelKlijent tmk = new TableModelKlijent(klijenti);
             tblKlijenti.setModel(tmk);
         }
+    }
+    
+    private void osveziTabeluUgovori() {
+        TableModelUgovor tmu = new TableModelUgovor(new ArrayList<>());
+        tblUgovori.setModel(tmu);
     }
 
     /**
@@ -58,6 +65,11 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
         btnPrikaziSve = new javax.swing.JButton();
         btnKreirajNoviUgovor = new javax.swing.JButton();
         btnKrajRada = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnIzmeniStatus = new javax.swing.JButton();
+        btnPrikaziUgovoreKlijenta = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblUgovori = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,45 +116,90 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
             }
         });
 
+        btnIzmeniStatus.setText("Izmeni status");
+        btnIzmeniStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniStatusActionPerformed(evt);
+            }
+        });
+
+        btnPrikaziUgovoreKlijenta.setText("Prikazi ugovore");
+        btnPrikaziUgovoreKlijenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrikaziUgovoreKlijentaActionPerformed(evt);
+            }
+        });
+
+        tblUgovori.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblUgovori);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEmailKlijent, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPretraziKlijente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnPrikaziSve, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(btnKreirajNoviUgovor)))
             .addGroup(layout.createSequentialGroup()
-                .addGap(218, 218, 218)
-                .addComponent(btnKrajRada, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnKreirajNoviUgovor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnIzmeniStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnKrajRada, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtEmailKlijent, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPretraziKlijente)
+                                .addGap(80, 80, 80)
+                                .addComponent(btnPrikaziSve, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPrikaziUgovoreKlijenta))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPrikaziSve, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(txtEmailKlijent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPretraziKlijente)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPretraziKlijente))
+                    .addComponent(btnPrikaziSve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnKreirajNoviUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(btnKrajRada)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnPrikaziUgovoreKlijenta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnKreirajNoviUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIzmeniStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnKrajRada)))
                 .addContainerGap())
         );
 
@@ -166,6 +223,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
 
     private void btnPrikaziSveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziSveActionPerformed
         popuniTabeluKlijenti();
+        osveziTabeluUgovori();
     }//GEN-LAST:event_btnPrikaziSveActionPerformed
 
     private void btnKreirajNoviUgovorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajNoviUgovorActionPerformed
@@ -176,22 +234,61 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
             return;
         }
         Klijent klijent = tmk.getKlijenti().get(red);
-        formaKreirajUgovor = new KreirajUgovorForma(zaposleni, klijent);
+        formaKreirajUgovor = new KreirajUgovorForma(zaposleni, klijent, null);
         formaKreirajUgovor.setVisible(true);
+        osveziTabeluUgovori();
     }//GEN-LAST:event_btnKreirajNoviUgovorActionPerformed
 
     private void btnKrajRadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKrajRadaActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnKrajRadaActionPerformed
 
+    private void btnPrikaziUgovoreKlijentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziUgovoreKlijentaActionPerformed
+        TableModelKlijent tmk = (TableModelKlijent) tblKlijenti.getModel();
+        int red = tblKlijenti.getSelectedRow();
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Morate prvo selektovani klijenta", "Greska", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Klijent klijent = tmk.getKlijenti().get(red);
+        List<Ugovor> ugovori = communication.vratiSveUgovore();
+        List<Ugovor> filterUgovori = new ArrayList<>();
+        for (Ugovor u : ugovori) {
+            if (u.getKlijent().equals(klijent)) {
+                filterUgovori.add(u);
+            }
+        }
+
+        TableModelUgovor tmu = new TableModelUgovor(filterUgovori);
+        tblUgovori.setModel(tmu);
+    }//GEN-LAST:event_btnPrikaziUgovoreKlijentaActionPerformed
+
+    private void btnIzmeniStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniStatusActionPerformed
+        TableModelUgovor tmu = (TableModelUgovor) tblUgovori.getModel();
+        int red = tblUgovori.getSelectedRow();
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Morate prvo selektovani ugovor", "Greska", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Ugovor ugovor = tmu.getUgovori().get(red);
+        KreirajUgovorForma izmeniUgovorForma = new KreirajUgovorForma(zaposleni, ugovor.getKlijent(), ugovor);
+        izmeniUgovorForma.setVisible(true);
+        osveziTabeluUgovori();
+    }//GEN-LAST:event_btnIzmeniStatusActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIzmeniStatus;
     private javax.swing.JButton btnKrajRada;
     private javax.swing.JButton btnKreirajNoviUgovor;
     private javax.swing.JButton btnPretraziKlijente;
     private javax.swing.JButton btnPrikaziSve;
+    private javax.swing.JButton btnPrikaziUgovoreKlijenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tblKlijenti;
+    private javax.swing.JTable tblUgovori;
     private javax.swing.JTextField txtEmailKlijent;
     // End of variables declaration//GEN-END:variables
 }

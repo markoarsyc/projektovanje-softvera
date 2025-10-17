@@ -90,6 +90,15 @@ public class ClientThread extends Thread {
                     UgovorSaStavkama ugovorSaStavkama = (UgovorSaStavkama) request.getParams();
                     response.setParams(controller.kreirajUgovor(ugovorSaStavkama.getUgovor(), ugovorSaStavkama.getStavke()));
                     break;
+                case Operacija.VRATI_SVE_UGOVORE:
+                    response.setParams(controller.vratiSve(new Ugovor()));
+                    break;
+                case Operacija.VRATI_SVE_STAVKE:
+                    response.setParams(controller.vratiSve(new StavkaUgovora()));
+                    break;
+                case Operacija.IZMENI_UGOVOR:
+                    response.setParams(controller.izmeni((Ugovor) request.getParams()));
+                    break;
                 default:
                     throw new AssertionError();
             }

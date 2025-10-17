@@ -193,7 +193,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
                FROM ugovor u
                JOIN zaposleni z ON u.zaposleni = z.idZaposleni
                JOIN klijent k ON u.klijent = k.idKlijent
-               LEFT JOIN kategorija_klijenta kk ON k.kategorija = kk.idKategorijeKlijenta
+               LEFT JOIN kategorija_klijenta kk ON k.kategorija = kk.idKategorijaKlijenta
                WHERE u.idUgovor = ?""";
     }
 
@@ -251,7 +251,7 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
                FROM ugovor u
                JOIN zaposleni z ON u.zaposleni = z.idZaposleni
                JOIN klijent k ON u.klijent = k.idKlijent
-               LEFT JOIN kategorija_klijenta kk ON k.kategorija = kk.idKategorijeKlijenta""";
+               LEFT JOIN kategorija_klijenta kk ON k.kategorija = kk.idKategorijaKlijenta""";
     }
 
     @Override
