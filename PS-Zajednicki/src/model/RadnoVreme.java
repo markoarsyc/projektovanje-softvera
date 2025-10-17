@@ -129,7 +129,7 @@ public class RadnoVreme implements Serializable, DomainObject<RadnoVreme> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM radno_vreme r JOIN smena s ON r.smena=s.idSmena JOIN zaposleni z ON r.zaposleni=z.idZaposleni WHERE s.zaposleni=? AND s.datum=?";
+        return "SELECT * FROM radno_vreme r JOIN smena s ON r.smena=s.idSmena JOIN zaposleni z ON r.zaposleni=z.idZaposleni WHERE s.zaposleni=? AND s.datum=? ORDER BY r.datum,r.smena";
     }
 
     @Override
@@ -151,7 +151,7 @@ public class RadnoVreme implements Serializable, DomainObject<RadnoVreme> {
             Zaposleni zaposleni = new Zaposleni(idZaposleni, ime, prezime, email, lozinka, datumZaposlenja);
 
             //Smena
-            int idSmena = rs.getInt("s.idSmene");
+            int idSmena = rs.getInt("s.idSmena");
             String naziv = rs.getString("s.naziv");
             LocalTime pocetak = rs.getTime("s.pocetak").toLocalTime();
             LocalTime kraj = rs.getTime("s.kraj").toLocalTime();
@@ -167,7 +167,7 @@ public class RadnoVreme implements Serializable, DomainObject<RadnoVreme> {
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM radno_vreme r JOIN smena s ON r.smena=s.idSmena JOIN zaposleni z ON r.zaposleni=z.idZaposleni";
+        return "SELECT * FROM radno_vreme r JOIN smena s ON r.smena=s.idSmena JOIN zaposleni z ON r.zaposleni=z.idZaposleni ORDER BY r.datum,r.smena";
     }
 
     @Override
@@ -189,7 +189,7 @@ public class RadnoVreme implements Serializable, DomainObject<RadnoVreme> {
             Zaposleni zaposleni = new Zaposleni(idZaposleni, ime, prezime, email, lozinka, datumZaposlenja);
 
             //Smena
-            int idSmena = rs.getInt("s.idSmene");
+            int idSmena = rs.getInt("s.idSmena");
             String naziv = rs.getString("s.naziv");
             LocalTime pocetak = rs.getTime("s.pocetak").toLocalTime();
             LocalTime kraj = rs.getTime("s.kraj").toLocalTime();

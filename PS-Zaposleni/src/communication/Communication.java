@@ -10,6 +10,8 @@ import java.util.List;
 import model.KategorijaKlijenta;
 import model.Klijent;
 import model.PaketUsluga;
+import model.RadnoVreme;
+import model.Smena;
 import model.StavkaUgovora;
 import model.Ugovor;
 import model.Zaposleni;
@@ -122,7 +124,7 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (List<Klijent>) response.getParams();
     }
-    
+
     public int dodajKlijenta(Klijent klijent) {
         Request request = new Request(klijent, Operacija.DODAJ_KLIJENTA);
         sender.send(request);
@@ -143,7 +145,7 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
     }
-    
+
     //Ugovor
     public int dodajUgovorSaStavkama(UgovorSaStavkama ugovorSaStavkama) {
         Request request = new Request(ugovorSaStavkama, Operacija.DODAJ_UGOVOR);
@@ -151,25 +153,62 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
     }
-    
+
     public List<Ugovor> vratiSveUgovore() {
         Request request = new Request(null, Operacija.VRATI_SVE_UGOVORE);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (List<Ugovor>) response.getParams();
     }
-    
+
     public List<StavkaUgovora> vratiSveStavke() {
         Request request = new Request(null, Operacija.VRATI_SVE_STAVKE);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (List<StavkaUgovora>) response.getParams();
     }
-    
+
     public int izmeniUgovor(Ugovor ugovor) {
         Request request = new Request(ugovor, Operacija.IZMENI_UGOVOR);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
+    }
+
+    //Radno vreme
+    public List<RadnoVreme> vratiSveRadnoVreme() {
+        Request request = new Request(null, Operacija.VRATI_SVE_RADNO_VREME);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<RadnoVreme>) response.getParams();
+    }
+
+    public int dodajRadnoVreme(RadnoVreme radnoVreme) {
+        Request request = new Request(radnoVreme, Operacija.DODAJ_RADNO_VREME);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int izmeniRadnoVreme(RadnoVreme radnoVreme) {
+        Request request = new Request(radnoVreme, Operacija.IZMENI_RADNO_VREME);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    public int obrisiRadnoVreme(RadnoVreme radnoVreme) {
+        Request request = new Request(radnoVreme, Operacija.OBRISI_RADNO_VREME);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
+
+    //Smene
+    public List<Smena> vratiSveSmene() {
+        Request request = new Request(null, Operacija.VRATI_SVE_SMENE);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (List<Smena>) response.getParams();
     }
 }

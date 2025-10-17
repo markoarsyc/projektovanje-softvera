@@ -28,6 +28,11 @@ public enum Operacija implements Serializable {
     VRATI_SVE_UGOVORE,
     IZMENI_UGOVOR,
     VRATI_SVE_STAVKE,
+    VRATI_SVE_RADNO_VREME,
+    VRATI_SVE_SMENE,
+    DODAJ_RADNO_VREME,
+    IZMENI_RADNO_VREME,
+    OBRISI_RADNO_VREME
     ;
     
 }

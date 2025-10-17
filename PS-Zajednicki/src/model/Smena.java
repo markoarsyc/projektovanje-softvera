@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,7 +92,8 @@ public class Smena implements Serializable, DomainObject<Smena> {
 
     @Override
     public String toString() {
-        return naziv;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        return String.format("%s (%s-%s)", naziv, pocetak.format(formatter), kraj.format(formatter));
     }
 
     @Override
@@ -132,7 +134,7 @@ public class Smena implements Serializable, DomainObject<Smena> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM smena WHERE id=?";
+        return "SELECT * FROM smena WHERE idSmena=?";
     }
 
     @Override
@@ -165,8 +167,8 @@ public class Smena implements Serializable, DomainObject<Smena> {
     @Override
     public List<Smena> createListFromResultSet(ResultSet rs) throws SQLException {
         List<Smena> lista = new ArrayList<>();
-        while(rs.next()) {
-            int idSmena = rs.getInt("idSmene");
+        while (rs.next()) {
+            int idSmena = rs.getInt("idSmena");
             String naziv = rs.getString("naziv");
             LocalTime pocetak = rs.getTime("pocetak").toLocalTime();
             LocalTime kraj = rs.getTime("kraj").toLocalTime();

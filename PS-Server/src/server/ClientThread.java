@@ -11,6 +11,8 @@ import java.util.Map;
 import model.KategorijaKlijenta;
 import model.Klijent;
 import model.PaketUsluga;
+import model.RadnoVreme;
+import model.Smena;
 import model.StavkaUgovora;
 import model.Ugovor;
 import model.Zaposleni;
@@ -98,6 +100,21 @@ public class ClientThread extends Thread {
                     break;
                 case Operacija.IZMENI_UGOVOR:
                     response.setParams(controller.izmeni((Ugovor) request.getParams()));
+                    break;
+                case Operacija.VRATI_SVE_RADNO_VREME:
+                    response.setParams(controller.vratiSve(new RadnoVreme()));
+                    break;
+                case Operacija.VRATI_SVE_SMENE:
+                    response.setParams(controller.vratiSve(new Smena()));
+                    break;
+                case Operacija.DODAJ_RADNO_VREME:
+                    response.setParams(controller.dodaj((RadnoVreme) request.getParams()));
+                    break;
+                case Operacija.IZMENI_RADNO_VREME:
+                    response.setParams(controller.izmeni((RadnoVreme) request.getParams()));
+                    break;
+                case Operacija.OBRISI_RADNO_VREME:
+                    response.setParams(controller.obrisi((RadnoVreme) request.getParams()));
                     break;
                 default:
                     throw new AssertionError();

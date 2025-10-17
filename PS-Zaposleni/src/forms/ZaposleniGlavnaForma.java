@@ -7,6 +7,7 @@ package forms;
 import forms.kategorija_klijenta.KategorijaKlijentaForma;
 import forms.klijent.KlijentForma;
 import forms.paket_usluga.PaketUslugaForma;
+import forms.radno_vreme.RadnoVremeForma;
 import forms.ugovor.UgovorGlavnaForma;
 import model.Zaposleni;
 
@@ -23,7 +24,9 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
     private PaketUslugaForma formaPaketUsluga;
     private KategorijaKlijentaForma formaKategorijaKlijenta;
     private KlijentForma formaKlijent;
+    private RadnoVremeForma formaRadnoVreme;
     private UgovorGlavnaForma formaUgovor;
+
     public ZaposleniGlavnaForma(Zaposleni zaposleni) {
         initComponents();
         this.zaposleni = zaposleni;
@@ -44,6 +47,8 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         btnKategorijeKlijenata = new javax.swing.JButton();
         btnKlijent = new javax.swing.JButton();
         btnUgovori = new javax.swing.JButton();
+        btnRadnoVreme = new javax.swing.JButton();
+        btnKrajRada = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,19 +81,39 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             }
         });
 
+        btnRadnoVreme.setText("Radno vreme");
+        btnRadnoVreme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRadnoVremeActionPerformed(evt);
+            }
+        });
+
+        btnKrajRada.setText("Kraj rada");
+        btnKrajRada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKrajRadaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(77, 77, 77)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUgovori, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                        .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnUgovori, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(81, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnRadnoVreme, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                            .addComponent(btnKrajRada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,9 +124,13 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
                 .addComponent(btnKategorijeKlijenata)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKlijent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUgovori, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(btnRadnoVreme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnKrajRada)
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -127,10 +156,21 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         formaUgovor.setVisible(true);
     }//GEN-LAST:event_btnUgovoriActionPerformed
 
+    private void btnKrajRadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKrajRadaActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnKrajRadaActionPerformed
+
+    private void btnRadnoVremeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadnoVremeActionPerformed
+        formaRadnoVreme = new RadnoVremeForma(zaposleni);
+        formaRadnoVreme.setVisible(true);
+    }//GEN-LAST:event_btnRadnoVremeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKategorijeKlijenata;
     private javax.swing.JButton btnKlijent;
+    private javax.swing.JButton btnKrajRada;
     private javax.swing.JButton btnPaketUsluga;
+    private javax.swing.JButton btnRadnoVreme;
     private javax.swing.JButton btnUgovori;
     // End of variables declaration//GEN-END:variables
 }
