@@ -17,7 +17,9 @@ public class VratiSveSO<T extends DomainObject<T>> extends AbstractSystemOperati
 
     @Override
     protected void validate(T object) throws Exception {
-        //Ova operacija ne zahteva validaciju
+        if (object == null) {
+            throw new Exception("Objekat ne sme biti null");
+        }
     }
 
     @Override

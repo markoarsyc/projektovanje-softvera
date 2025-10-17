@@ -119,7 +119,7 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (List<Klijent>) response.getParams();
     }
-
+    
     public int dodajKlijenta(Klijent klijent) {
         Request request = new Request(klijent, Operacija.DODAJ_KLIJENTA);
         sender.send(request);
@@ -140,5 +140,7 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
     }
+    
+    
 
 }

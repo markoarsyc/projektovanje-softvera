@@ -30,10 +30,10 @@ public class KlijentForma extends javax.swing.JFrame {
     }
 
     public void popuniTabeluKlijenti() {
-        List<Klijent> klijenti = communication.vratiSveKlijente();  // Pretpostavljam da postoji metoda za dobijanje klijenata
+        List<Klijent> klijenti = communication.vratiSveKlijente();
         if (klijenti != null) {
             TableModelKlijent tmk = new TableModelKlijent(klijenti);
-            tblKlijenti.setModel(tmk);  // Pretpostavljam da se tabela zove tblKlijent
+            tblKlijenti.setModel(tmk);
         }
     }
 
@@ -55,6 +55,7 @@ public class KlijentForma extends javax.swing.JFrame {
         btnIzmeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
         btnKrajRada = new javax.swing.JButton();
+        btnResetFilteri = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,6 +109,13 @@ public class KlijentForma extends javax.swing.JFrame {
             }
         });
 
+        btnResetFilteri.setText("Ocisti filtere");
+        btnResetFilteri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetFilteriActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,7 +128,9 @@ public class KlijentForma extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPretrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPretrazi, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnResetFilteri, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnDodaj)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -139,7 +149,8 @@ public class KlijentForma extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPretrazi))
+                    .addComponent(btnPretrazi)
+                    .addComponent(btnResetFilteri))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,8 +225,23 @@ public class KlijentForma extends javax.swing.JFrame {
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void btnPretraziActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretraziActionPerformed
-        
+        List<Klijent> klijenti = communication.vratiSveKlijente();
+        if (klijenti != null) {
+            List<Klijent> filterKlijenti = new ArrayList<>();
+            String filterEmail = txtEmail.getText();
+            for (Klijent k : klijenti) {
+                if (k.getEmail().contains(filterEmail)) {
+                    filterKlijenti.add(k);
+                }
+            }
+            TableModelKlijent tmk = new TableModelKlijent(filterKlijenti);
+            tblKlijenti.setModel(tmk);
+        }
     }//GEN-LAST:event_btnPretraziActionPerformed
+
+    private void btnResetFilteriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetFilteriActionPerformed
+        popuniTabeluKlijenti();
+    }//GEN-LAST:event_btnResetFilteriActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
@@ -223,6 +249,7 @@ public class KlijentForma extends javax.swing.JFrame {
     private javax.swing.JButton btnKrajRada;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPretrazi;
+    private javax.swing.JButton btnResetFilteri;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblKlijenti;
