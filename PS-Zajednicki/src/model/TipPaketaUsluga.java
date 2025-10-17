@@ -11,5 +11,5 @@ import java.io.Serializable;
  * @author Marko
  */
 public enum TipPaketaUsluga implements Serializable {
-    MOBILNI, OPTICKI_INTERNT, FIKSNI, BOX;
+    MOBILNI, OPTICKI_INTERNET, FIKSNI, BOX;
 }

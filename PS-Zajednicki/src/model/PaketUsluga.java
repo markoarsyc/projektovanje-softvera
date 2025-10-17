@@ -95,7 +95,7 @@ public class PaketUsluga implements Serializable, DomainObject<PaketUsluga> {
 
     @Override
     public String toString() {
-        return nazivPaketa;
+        return nazivPaketa + " (" + cenaMesec + "RSD)";
     }
 
     @Override

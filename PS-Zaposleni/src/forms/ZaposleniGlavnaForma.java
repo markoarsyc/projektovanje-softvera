@@ -7,6 +7,7 @@ package forms;
 import forms.kategorija_klijenta.KategorijaKlijentaForma;
 import forms.klijent.KlijentForma;
 import forms.paket_usluga.PaketUslugaForma;
+import forms.ugovor.UgovorGlavnaForma;
 import model.Zaposleni;
 
 /**
@@ -22,6 +23,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
     private PaketUslugaForma formaPaketUsluga;
     private KategorijaKlijentaForma formaKategorijaKlijenta;
     private KlijentForma formaKlijent;
+    private UgovorGlavnaForma formaUgovor;
     public ZaposleniGlavnaForma(Zaposleni zaposleni) {
         initComponents();
         this.zaposleni = zaposleni;
@@ -41,6 +43,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         btnPaketUsluga = new javax.swing.JButton();
         btnKategorijeKlijenata = new javax.swing.JButton();
         btnKlijent = new javax.swing.JButton();
+        btnUgovori = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +68,14 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             }
         });
 
+        btnUgovori.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnUgovori.setText("Ugovori");
+        btnUgovori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUgovoriActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,9 +83,11 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                    .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnUgovori, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                        .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(81, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -86,7 +99,9 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
                 .addComponent(btnKategorijeKlijenata)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKlijent)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addComponent(btnUgovori, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
 
         pack();
@@ -107,9 +122,15 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         formaKlijent.setVisible(true);
     }//GEN-LAST:event_btnKlijentActionPerformed
 
+    private void btnUgovoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUgovoriActionPerformed
+        formaUgovor = new UgovorGlavnaForma(zaposleni);
+        formaUgovor.setVisible(true);
+    }//GEN-LAST:event_btnUgovoriActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKategorijeKlijenata;
     private javax.swing.JButton btnKlijent;
     private javax.swing.JButton btnPaketUsluga;
+    private javax.swing.JButton btnUgovori;
     // End of variables declaration//GEN-END:variables
 }

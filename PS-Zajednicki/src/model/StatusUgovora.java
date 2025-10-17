@@ -11,5 +11,5 @@ import java.io.Serializable;
  * @author Marko
  */
 public enum StatusUgovora implements Serializable{
-    AKTIVAN, ZADUZENJE, ISTEKAO;
+    AKTIVAN, PREVREMENI_RASKID, ISTEKAO;
 }

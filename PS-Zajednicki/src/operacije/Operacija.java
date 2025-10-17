@@ -23,7 +23,8 @@ public enum Operacija implements Serializable {
     VRATI_SVE_KLIJENTE,
     DODAJ_KLIJENTA,
     IZMENI_KLIJENTA,
-    OBRISI_KLIJENTA
+    OBRISI_KLIJENTA,
+    DODAJ_UGOVOR,
     ;
     
 }

@@ -7,8 +7,11 @@ package controller;
 import baza.DBBroker;
 import domain.DomainObject;
 import java.util.List;
+import model.StavkaUgovora;
+import model.Ugovor;
 import operacije.IzmeniSO;
 import operacije.KreirajSO;
+import operacije.KreirajUgovorSO;
 import operacije.ObrisiSO;
 import operacije.VratiSO;
 import operacije.VratiSveSO;
@@ -72,6 +75,15 @@ public class Controller {
             return (int) new ObrisiSO<T>().execute(object);
         } catch (Exception ex) {
             System.out.println("Greska prilikom izvrsavanja obrisiSO: " + ex.getMessage());
+        }
+        return 0;
+    }
+    
+    public int kreirajUgovor(Ugovor u, List<StavkaUgovora> listaStavki) {
+        try {
+            return (int) new KreirajUgovorSO(listaStavki).execute(u);
+        } catch (Exception ex) {
+            System.out.println("Greska prilikom izvrsavanja kreirajUgovorSO: " + ex.getMessage());
         }
         return 0;
     }

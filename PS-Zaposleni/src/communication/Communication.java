@@ -11,6 +11,7 @@ import model.KategorijaKlijenta;
 import model.Klijent;
 import model.PaketUsluga;
 import model.Zaposleni;
+import model.helper.UgovorSaStavkama;
 import operacije.Operacija;
 import transfer.Receiver;
 import transfer.Request;
@@ -141,6 +142,11 @@ public class Communication {
         return (int) response.getParams();
     }
     
-    
-
+    //Ugovor
+    public int dodajUgovorSaStavkama(UgovorSaStavkama ugovorSaStavkama) {
+        Request request = new Request(ugovorSaStavkama, Operacija.DODAJ_UGOVOR);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
 }

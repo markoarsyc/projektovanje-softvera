@@ -61,11 +61,23 @@ public class StavkaUgovora implements Serializable, DomainObject<StavkaUgovora> 
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        StavkaUgovora other = (StavkaUgovora) obj;
-        return rb == other.rb && Objects.equals(ugovor, other.ugovor);
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StavkaUgovora other = (StavkaUgovora) obj;
+        if (!Objects.equals(this.ugovor, other.ugovor)) {
+            return false;
+        }
+        return Objects.equals(this.paketUsluga, other.paketUsluga);
     }
+    
+    
 
     @Override
     public String toString() {
