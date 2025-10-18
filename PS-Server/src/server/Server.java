@@ -1,18 +1,23 @@
 package server;
 
+import config.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server extends Thread {
 
-    private int port = 9000;
+    private int port;
     private ServerSocket serverSocket;
     private boolean running = false;
 
     @Override
     public void run() {
+        
         try {
+            FileReader fileReader = new FileReader();
+            fileReader.readFile("server.config");
+            port = fileReader.getPort();
             serverSocket = new ServerSocket(port);
             running = true;
             System.out.println("Server je pokrenut na portu " + port);
