@@ -4,12 +4,21 @@
  */
 package forms;
 
+import communication.Communication;
 import forms.kategorija_klijenta.KategorijaKlijentaForma;
 import forms.klijent.KlijentForma;
 import forms.paket_usluga.PaketUslugaForma;
 import forms.radno_vreme.RadnoVremeForma;
 import forms.ugovor.UgovorGlavnaForma;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.RadnoVreme;
 import model.Zaposleni;
+import thread.TimeThread;
 
 /**
  *
@@ -26,12 +35,49 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
     private KlijentForma formaKlijent;
     private RadnoVremeForma formaRadnoVreme;
     private UgovorGlavnaForma formaUgovor;
+    private Communication communication = Communication.getInstance();
 
     public ZaposleniGlavnaForma(Zaposleni zaposleni) {
         initComponents();
         this.zaposleni = zaposleni;
         setTitle("Zaposleni: " + zaposleni.toString());
         setLocationRelativeTo(null);
+        startClock();
+    }
+
+    private void startClock() {
+        txtSmena.setEnabled(false);
+        TimeThread thread = new TimeThread(lblVreme, lblDatum, txtSmena);
+        thread.start();
+    }
+
+    private boolean validateSmena() {
+        List<RadnoVreme> radnaVremena = communication.vratiSveRadnoVreme();
+        List<RadnoVreme> zaposleniRadnoVreme = new ArrayList<>();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate datumIzLabel = null;
+
+        try {
+            datumIzLabel = LocalDate.parse(lblDatum.getText(), formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Neispravan format datuma u labeli!", "Greska", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        for (RadnoVreme rv : radnaVremena) {
+            if (rv.getZaposleni().equals(zaposleni) && rv.getDatum().equals(datumIzLabel)) {
+                zaposleniRadnoVreme.add(rv);
+            }
+        }
+
+        for (RadnoVreme zrv : zaposleniRadnoVreme) {
+            if (zrv.getSmena().getNaziv().equals(txtSmena.getText())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -49,6 +95,11 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         btnUgovori = new javax.swing.JButton();
         btnRadnoVreme = new javax.swing.JButton();
         btnKrajRada = new javax.swing.JButton();
+        lblVreme = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtSmena = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        lblDatum = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,30 +146,65 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             }
         });
 
+        lblVreme.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblVreme.setText("00:00:00");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Smena:");
+
+        txtSmena.setText("NEMA");
+
+        lblDatum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblDatum.setText("DD-MM-YYYY");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUgovori, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(81, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRadnoVreme, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
-                            .addComponent(btnKrajRada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnPaketUsluga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnKategorijeKlijenata, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                        .addComponent(btnKlijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnUgovori, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnRadnoVreme, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                        .addComponent(btnKrajRada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 69, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtSmena, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)))))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblVreme, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtSmena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDatum))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblVreme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPaketUsluga)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKategorijeKlijenata)
@@ -126,34 +212,56 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
                 .addComponent(btnKlijent)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUgovori, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRadnoVreme)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnKrajRada)
-                .addGap(38, 38, 38))
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPaketUslugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaketUslugaActionPerformed
-        formaPaketUsluga = new PaketUslugaForma();
-        formaPaketUsluga.setVisible(true);
+        if (validateSmena()) {
+            formaPaketUsluga = new PaketUslugaForma();
+            formaPaketUsluga.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_btnPaketUslugaActionPerformed
 
     private void btnKategorijeKlijenataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKategorijeKlijenataActionPerformed
-        formaKategorijaKlijenta = new KategorijaKlijentaForma();
-        formaKategorijaKlijenta.setVisible(true);
+        if (validateSmena()) {
+            formaKategorijaKlijenta = new KategorijaKlijentaForma();
+            formaKategorijaKlijenta.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_btnKategorijeKlijenataActionPerformed
 
     private void btnKlijentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKlijentActionPerformed
-        formaKlijent = new KlijentForma();
-        formaKlijent.setVisible(true);
+        if (validateSmena()) {
+            formaKlijent = new KlijentForma();
+            formaKlijent.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_btnKlijentActionPerformed
 
     private void btnUgovoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUgovoriActionPerformed
-        formaUgovor = new UgovorGlavnaForma(zaposleni);
-        formaUgovor.setVisible(true);
+        if (validateSmena()) {
+            formaUgovor = new UgovorGlavnaForma(zaposleni);
+            formaUgovor.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnUgovoriActionPerformed
 
     private void btnKrajRadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKrajRadaActionPerformed
@@ -172,5 +280,10 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
     private javax.swing.JButton btnPaketUsluga;
     private javax.swing.JButton btnRadnoVreme;
     private javax.swing.JButton btnUgovori;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblDatum;
+    private javax.swing.JLabel lblVreme;
+    private javax.swing.JTextField txtSmena;
     // End of variables declaration//GEN-END:variables
 }
