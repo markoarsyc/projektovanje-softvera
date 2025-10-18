@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author Marko
  */
 public enum Operacija implements Serializable {
+    //Zaposleni
     LOGIN_ZAPOSLENI,
     VRATI_SVE_PAKETE_USLUGA,
     DODAJ_PAKET_USLUGA,
@@ -32,7 +33,10 @@ public enum Operacija implements Serializable {
     VRATI_SVE_SMENE,
     DODAJ_RADNO_VREME,
     IZMENI_RADNO_VREME,
-    OBRISI_RADNO_VREME
+    OBRISI_RADNO_VREME,
+    
+    //Klijent
+    PRIJAVI_KLIJENT
     ;
     
 }

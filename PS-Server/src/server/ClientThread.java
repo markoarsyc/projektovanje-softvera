@@ -116,6 +116,9 @@ public class ClientThread extends Thread {
                 case Operacija.OBRISI_RADNO_VREME:
                     response.setParams(controller.obrisi((RadnoVreme) request.getParams()));
                     break;
+                case Operacija.PRIJAVI_KLIJENT:
+                    response.setParams(controller.vrati((Klijent) request.getParams()));
+                    break;
                 default:
                     throw new AssertionError();
             }

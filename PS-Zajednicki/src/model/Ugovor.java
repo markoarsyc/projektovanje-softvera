@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +141,10 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
 
     @Override
     public String toString() {
-        return "Ugovor{" + "idUgovor=" + idUgovor + ", zaposleni=" + zaposleni + ", klijent=" + klijent + ", datumPocetka=" + datumPocetka + ", datumIsteka=" + datumIsteka + ", trajanjeMeseci=" + trajanjeMeseci + ", ukupnaCena=" + ukupnaCena + ", status=" + status + '}';
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String datumPocetkaStr = datumPocetka.format(formatter);
+        String datumIstekaStr = datumIsteka.format(formatter);
+        return "BROJ UGOVORA: " + idUgovor + " / (" + datumPocetkaStr + " - " + datumIstekaStr + ") / " + status;
     }
 
     @Override

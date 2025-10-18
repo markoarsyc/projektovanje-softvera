@@ -234,7 +234,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Cena i status:");
+        jLabel9.setText("Cena i status");
 
         jLabel10.setText("Status ugovora:");
 
