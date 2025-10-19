@@ -13,6 +13,7 @@ import java.io.Serializable;
 public enum Operacija implements Serializable {
     //Zaposleni
     LOGIN_ZAPOSLENI,
+    LOGOUT_ZAPOSLENI,
     VRATI_SVE_PAKETE_USLUGA,
     DODAJ_PAKET_USLUGA,
     IZMENI_PAKET_USLUGA,

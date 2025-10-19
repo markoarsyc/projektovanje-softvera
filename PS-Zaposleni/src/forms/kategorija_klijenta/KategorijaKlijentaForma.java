@@ -6,6 +6,7 @@ package forms.kategorija_klijenta;
 
 import communication.Communication;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.KategorijaKlijenta;
 
@@ -23,6 +24,7 @@ public class KategorijaKlijentaForma extends javax.swing.JFrame {
 
     public KategorijaKlijentaForma() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za rad sa kategorijama klijenta");
         setLocationRelativeTo(null);
         popuniTabeluKategorijaKlijenta();

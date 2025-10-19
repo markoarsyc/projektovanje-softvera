@@ -8,6 +8,7 @@ import communication.Communication;
 import forms.klijent.TableModelKlijent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Klijent;
 import model.Ugovor;
@@ -29,6 +30,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
     public UgovorGlavnaForma(Zaposleni zaposleni) {
         this.zaposleni = zaposleni;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za rad sa ugovorima");
         setLocationRelativeTo(null);
         popuniTabeluKlijenti();

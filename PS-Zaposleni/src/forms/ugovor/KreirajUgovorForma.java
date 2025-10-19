@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Klijent;
 import model.PaketUsluga;
@@ -43,6 +44,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         this.klijent = klijent;
         this.ugovor = ugovor;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za kreiranje ugovora");
         setLocationRelativeTo(null);
         popuniInicijalnimPodacima();

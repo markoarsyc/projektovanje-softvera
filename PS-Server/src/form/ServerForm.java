@@ -4,8 +4,15 @@
  */
 package form;
 
+import controller.Controller;
 import java.awt.ComponentOrientation;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.SwingUtilities;
+import model.Zaposleni;
+import model.helper.UlogovaniZaposleni;
 import server.Server;
+import thread.StatusThread;
 
 /**
  *
@@ -16,13 +23,23 @@ public class ServerForm extends javax.swing.JFrame {
     /**
      * Creates new form ServerForm
      */
+    private Controller controller = Controller.getInstance();
     private Server server;
+    private List<Zaposleni> sviZaposleni;
 
     public ServerForm() {
         initComponents();
         setTitle("Server");
         setLocationRelativeTo(null);
         btnStopServer.setEnabled(false);
+        popuniListuZaposleni();
+        StatusThread statusNit = new StatusThread(this);
+        statusNit.start();
+    }
+
+    private void popuniListuZaposleni() {
+        List<Zaposleni> sviZaposleni = controller.vratiSve(new Zaposleni());
+        this.sviZaposleni = sviZaposleni;
     }
 
     private void toggleServerButtons() {
@@ -33,6 +50,22 @@ public class ServerForm extends javax.swing.JFrame {
         } else {
             lblStatusServera.setText("Status servera: POKRENUT");
         }
+    }
+
+    public void popuniTabeluUlogovaniZaposleni() {
+        List<UlogovaniZaposleni> sviUlogovani = controller.getUlogovaniZaposleni();
+        List<UlogovaniZaposleni> sviZaTabelu = new ArrayList<>();
+        for (Zaposleni z : sviZaposleni) {
+            UlogovaniZaposleni uz = new UlogovaniZaposleni(z);
+            if (sviUlogovani.contains(uz)) {
+                uz.setStatus("ULOGOVAN");
+            }
+            sviZaTabelu.add(uz);
+        }
+        TableModelZaposleni tmz = new TableModelZaposleni(sviZaTabelu);
+        SwingUtilities.invokeLater(() -> {
+            tblZaposleni.setModel(tmz);
+        });
     }
 
     /**
@@ -47,6 +80,10 @@ public class ServerForm extends javax.swing.JFrame {
         btnStartServer = new javax.swing.JButton();
         btnStopServer = new javax.swing.JButton();
         lblStatusServera = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblZaposleni = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,33 +101,69 @@ public class ServerForm extends javax.swing.JFrame {
             }
         });
 
+        lblStatusServera.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblStatusServera.setText("Status servera: ISKLJUCEN");
+
+        tblZaposleni.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblZaposleni);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Zaposleni");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(53, 53, 53)
                 .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnStopServer, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addComponent(lblStatusServera, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(lblStatusServera, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStopServer)
                     .addComponent(btnStartServer, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblStatusServera)
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,6 +227,10 @@ public class ServerForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStartServer;
     private javax.swing.JButton btnStopServer;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblStatusServera;
+    private javax.swing.JTable tblZaposleni;
     // End of variables declaration//GEN-END:variables
 }

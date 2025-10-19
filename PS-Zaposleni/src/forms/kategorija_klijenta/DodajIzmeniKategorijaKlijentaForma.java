@@ -5,6 +5,7 @@
 package forms.kategorija_klijenta;
 
 import communication.Communication;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.KategorijaKlijenta;
 
@@ -25,6 +26,7 @@ public class DodajIzmeniKategorijaKlijentaForma extends javax.swing.JFrame {
         this.glavnaForma = glavnaForma;
         this.kategorija = kategorija;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za dodavanje i izmenu kategorija klijenta");
         setLocationRelativeTo(null);
         showHideButtons();

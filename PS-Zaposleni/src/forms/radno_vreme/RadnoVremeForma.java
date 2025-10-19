@@ -7,6 +7,7 @@ package forms.radno_vreme;
 import communication.Communication;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.RadnoVreme;
 import model.Zaposleni;
@@ -27,6 +28,7 @@ public class RadnoVremeForma extends javax.swing.JFrame {
     public RadnoVremeForma(Zaposleni zaposleni) {
         this.zaposleni = zaposleni;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Radno vreme");
         setLocationRelativeTo(null);
         popuniTabeluRadnoVreme();

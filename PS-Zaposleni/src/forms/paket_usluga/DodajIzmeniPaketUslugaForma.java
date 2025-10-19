@@ -6,6 +6,7 @@ package forms.paket_usluga;
 
 import communication.Communication;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.PaketUsluga;
 import model.TipPaketaUsluga;
@@ -27,6 +28,7 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
         this.glavnaFormaPaketUsluga = glavnaFormaPaketUsluga;
         this.paket = paket;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za dodavanje i izmenu paketa usluga");
         setLocationRelativeTo(null);
         showHideButtons();

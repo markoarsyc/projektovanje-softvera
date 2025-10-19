@@ -6,9 +6,11 @@ package controller;
 
 import baza.DBBroker;
 import domain.DomainObject;
+import java.util.ArrayList;
 import java.util.List;
 import model.StavkaUgovora;
 import model.Ugovor;
+import model.helper.UlogovaniZaposleni;
 import operacije.IzmeniSO;
 import operacije.KreirajSO;
 import operacije.KreirajUgovorSO;
@@ -23,6 +25,7 @@ import operacije.VratiSveSO;
 public class Controller {
     private static Controller instance;
     private DBBroker dbb;
+    private List<UlogovaniZaposleni> ulogovaniZaposleni;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -33,6 +36,7 @@ public class Controller {
 
     private Controller() {
         dbb = new DBBroker();
+        ulogovaniZaposleni = new ArrayList<>();
     }
     
     public <T extends DomainObject<T>> T vrati(T object) {
@@ -86,5 +90,9 @@ public class Controller {
             System.out.println("Greska prilikom izvrsavanja kreirajUgovorSO: " + ex.getMessage());
         }
         return 0;
+    }
+
+    public List<UlogovaniZaposleni> getUlogovaniZaposleni() {
+        return ulogovaniZaposleni;
     }
 }

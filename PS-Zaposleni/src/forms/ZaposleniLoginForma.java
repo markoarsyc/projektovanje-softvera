@@ -115,7 +115,7 @@ public class ZaposleniLoginForma extends javax.swing.JFrame {
             gf.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Email i lozinka nisu ispravni", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email i lozinka nisu ispravni ili ste vec prijavljeni", "Greska", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPrijavaActionPerformed
 

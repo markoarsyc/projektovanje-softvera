@@ -6,6 +6,7 @@ package forms.paket_usluga;
 
 import communication.Communication;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.PaketUsluga;
 
@@ -23,6 +24,7 @@ public class PaketUslugaForma extends javax.swing.JFrame {
 
     public PaketUslugaForma() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za rad sa paketima usluga");
         setLocationRelativeTo(null);
         popuniTabeluPaketiUsluga();

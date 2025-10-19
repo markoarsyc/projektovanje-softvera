@@ -6,6 +6,7 @@ package forms.klijent;
 
 import communication.Communication;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.KategorijaKlijenta;
 import model.Klijent;
@@ -27,6 +28,7 @@ public class DodajIzmeniKlijentForma extends javax.swing.JFrame {
         this.glavnaFormaKlijent = glavnaKlijentForma;
         this.klijent = klijent;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         popuniCbKategorije();
         setTitle("Forma za dodavanje i izmeni podataka o klijentima");
         setLocationRelativeTo(null);

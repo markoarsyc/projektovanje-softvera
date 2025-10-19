@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.RadnoVreme;
 import model.Smena;
@@ -33,7 +34,9 @@ public class DodajIzmeniRadnoVremeForma extends javax.swing.JFrame {
         this.zaposleni = zaposleni;
         this.radnoVreme = radnoVreme;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za dodavanje i izmenu radnog vremena");
+        setLocationRelativeTo(null);
         btnIzmeni.setVisible(false);
         popuniCbSmena();
         ubaciDanasnjiDatum();

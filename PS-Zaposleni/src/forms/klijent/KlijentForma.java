@@ -7,6 +7,7 @@ package forms.klijent;
 import communication.Communication;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Klijent;
 
@@ -24,6 +25,7 @@ public class KlijentForma extends javax.swing.JFrame {
 
     public KlijentForma() {
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Forma za rad sa klijentima");
         setLocationRelativeTo(null);
         popuniTabeluKlijenti();

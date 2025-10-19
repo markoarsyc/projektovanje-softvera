@@ -17,6 +17,7 @@ import model.StavkaUgovora;
 import model.Ugovor;
 import model.Zaposleni;
 import model.helper.UgovorSaStavkama;
+import model.helper.UlogovaniZaposleni;
 import operacije.Operacija;
 import transfer.Receiver;
 import transfer.Request;
@@ -50,7 +51,25 @@ public class ClientThread extends Thread {
             }
             switch (request.getOperacija()) {
                 case Operacija.LOGIN_ZAPOSLENI:
-                    response.setParams(controller.vrati((Zaposleni) request.getParams()));
+                    Zaposleni ulogovani = controller.vrati((Zaposleni) request.getParams());
+                    response.setParams(ulogovani);
+                    if (ulogovani != null) {
+                        UlogovaniZaposleni ulogovaniZaposleni = new UlogovaniZaposleni(ulogovani);
+                        if (!controller.getUlogovaniZaposleni().contains(ulogovaniZaposleni)) {
+                            controller.getUlogovaniZaposleni().add(ulogovaniZaposleni);
+                        } else {
+                            response.setParams(null);
+                        }    
+                    }
+                    break;
+                case Operacija.LOGOUT_ZAPOSLENI:
+                    UlogovaniZaposleni ulogovaniOdjava = new UlogovaniZaposleni((Zaposleni) request.getParams());
+                    if (controller.getUlogovaniZaposleni().contains(ulogovaniOdjava)) {
+                        controller.getUlogovaniZaposleni().remove(ulogovaniOdjava);
+                        response.setParams(true);
+                    } else {
+                        response.setParams(false);
+                    }
                     break;
                 case Operacija.VRATI_SVE_PAKETE_USLUGA:
                     response.setParams(controller.vratiSve(new PaketUsluga()));

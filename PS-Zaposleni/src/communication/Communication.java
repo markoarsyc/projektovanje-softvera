@@ -58,6 +58,13 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (Zaposleni) response.getParams();
     }
+    
+    public boolean logout(Zaposleni zaposleni) {
+        Request request = new Request(zaposleni, Operacija.LOGOUT_ZAPOSLENI);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (boolean) response.getParams();
+    }
 
     //Paket usluga
     public List<PaketUsluga> vratiSvePakete() {

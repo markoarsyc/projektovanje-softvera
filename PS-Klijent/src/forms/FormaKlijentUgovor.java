@@ -8,6 +8,7 @@ import communication.Communication;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import model.StavkaUgovora;
 import model.Ugovor;
 
@@ -26,6 +27,7 @@ public class FormaKlijentUgovor extends javax.swing.JFrame {
     public FormaKlijentUgovor(Ugovor ugovor) {
         this.ugovor = ugovor;
         initComponents();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Detalji o ugovoru BR: " + ugovor.getIdUgovor());
         setLocationRelativeTo(null);
         popuniInicijalno();

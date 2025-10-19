@@ -43,11 +43,24 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         setTitle("Zaposleni: " + zaposleni.toString());
         setLocationRelativeTo(null);
         startClock();
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                try {
+                    communication.logout(zaposleni);
+                    System.out.println("Zaposleni " + zaposleni.toString() + " je odjavljen sa servera.");
+                } catch (Exception ex) {
+                    System.out.println("Greška pri odjavljivanju: " + ex.getMessage());
+                }
+            }
+        });
     }
 
     private void startClock() {
         txtSmena.setEnabled(false);
         TimeThread thread = new TimeThread(lblVreme, lblDatum, txtSmena);
+        thread.setDaemon(true);
         thread.start();
     }
 
@@ -265,7 +278,12 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUgovoriActionPerformed
 
     private void btnKrajRadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKrajRadaActionPerformed
-        this.dispose();
+        boolean result = communication.logout(zaposleni);
+        if (result) {
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Doslo je do greske prilikom odjave", "Greska", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnKrajRadaActionPerformed
 
     private void btnRadnoVremeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadnoVremeActionPerformed
