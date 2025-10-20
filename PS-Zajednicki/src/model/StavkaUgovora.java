@@ -166,19 +166,33 @@ public class StavkaUgovora implements Serializable, DomainObject<StavkaUgovora> 
 
     @Override
     public String getSelectAllQuery() {
-        return """
+        if (ugovor == null) {
+          return """
                SELECT su.rb, su.finalnaCena,
                       u.idUgovor,
                       pu.idPaketUsluga, pu.tip, pu.nazivPaketa, pu.cenaMesec
                FROM stavka_ugovora su
                JOIN ugovor u ON su.ugovor = u.idUgovor
                JOIN paket_usluga pu ON su.paketUsluga = pu.idPaketUsluga
-               """;
+               """;  
+        } else {
+            return """
+               SELECT su.rb, su.finalnaCena,
+                      u.idUgovor,
+                      pu.idPaketUsluga, pu.tip, pu.nazivPaketa, pu.cenaMesec
+               FROM stavka_ugovora su
+               JOIN ugovor u ON su.ugovor = u.idUgovor
+               JOIN paket_usluga pu ON su.paketUsluga = pu.idPaketUsluga
+               WHERE su.ugovor = ?
+               """; 
+        }
     }
 
     @Override
     public void fillSelectAllStatement(PreparedStatement ps) throws SQLException {
-        // nema parametara
+        if (ugovor != null) {
+            ps.setInt(1, ugovor.getIdUgovor());
+        } 
     }
 
     @Override

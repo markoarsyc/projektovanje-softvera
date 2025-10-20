@@ -44,7 +44,7 @@ public class TimeThread extends Thread {
             } else if (sati >= 16 && sati < 22) {
                 txtSmena.setText("DRUGA");
             } else {
-                txtSmena.setText("NEMA");
+                txtSmena.setText("PREKOVREMENO");
             }
 
             try {

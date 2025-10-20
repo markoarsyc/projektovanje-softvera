@@ -142,8 +142,8 @@ public class Ugovor implements Serializable, DomainObject<Ugovor> {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String datumPocetkaStr = datumPocetka.format(formatter);
-        String datumIstekaStr = datumIsteka.format(formatter);
+        String datumPocetkaStr = (datumPocetka != null) ? datumPocetka.format(formatter) : "";
+        String datumIstekaStr = (datumIsteka != null) ? datumIsteka.format(formatter) : "";
         return "BROJ UGOVORA: " + idUgovor + " / (" + datumPocetkaStr + " - " + datumIstekaStr + ") / " + status;
     }
 

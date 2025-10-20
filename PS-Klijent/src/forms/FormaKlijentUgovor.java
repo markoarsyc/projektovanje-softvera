@@ -55,14 +55,10 @@ public class FormaKlijentUgovor extends javax.swing.JFrame {
     }
     
     private void popuniTabeluStavke() {
-        List<StavkaUgovora> stavke = communication.vratiSveStavke();
-        List<StavkaUgovora> stavkeZaOdredjeni = new ArrayList<>();
-        for (StavkaUgovora s : stavke) {
-            if(s.getUgovor().getIdUgovor() == ugovor.getIdUgovor()) {
-                stavkeZaOdredjeni.add(s);
-            }
-        }
-        TableModelStavkaUgovora tmsu = new TableModelStavkaUgovora(stavkeZaOdredjeni);
+        StavkaUgovora stavkaZaQuery = new StavkaUgovora();
+        stavkaZaQuery.setUgovor(ugovor);
+        List<StavkaUgovora> stavke = communication.vratiSveStavke(stavkaZaQuery);
+        TableModelStavkaUgovora tmsu = new TableModelStavkaUgovora(stavke);
         tblStavkeUgovora.setModel(tmsu);
     }
 

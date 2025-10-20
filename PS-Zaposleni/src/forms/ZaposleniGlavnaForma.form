@@ -46,8 +46,8 @@
                               </Group>
                               <EmptySpace min="0" pref="69" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtSmena" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="txtSmena" min="-2" pref="145" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblDatum" min="-2" pref="123" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
@@ -165,9 +165,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSmena">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="NEMA"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>

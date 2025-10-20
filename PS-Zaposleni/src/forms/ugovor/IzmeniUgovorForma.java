@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
@@ -28,7 +27,7 @@ import model.helper.UgovorSaStavkama;
  *
  * @author Marko
  */
-public class KreirajUgovorForma extends javax.swing.JFrame {
+public class IzmeniUgovorForma extends javax.swing.JFrame {
 
     /**
      * Creates new form KreirajUgovorForma
@@ -39,7 +38,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
     private Communication communication = Communication.getInstance();
     private List<StavkaUgovora> stavkeUgovora = new ArrayList<>();
 
-    public KreirajUgovorForma(Zaposleni zaposleni, Klijent klijent, Ugovor ugovor) {
+    public IzmeniUgovorForma(Zaposleni zaposleni, Klijent klijent, Ugovor ugovor) {
         this.zaposleni = zaposleni;
         this.klijent = klijent;
         this.ugovor = ugovor;
@@ -65,6 +64,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
     private void popuniInicijalnimPodacima() {
         popuniTabeluStavkeUgovora();
+
         cbTipPaketaUsluga.setSelectedIndex(-1);
         cbPaketiUsluga.setEnabled(false);
         cbPaketiUsluga.setSelectedIndex(-1);
@@ -74,16 +74,10 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         txtZaposleni.setEnabled(false);
 
         //Datum pocetka
-        LocalDate danasnjiDatum = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String formattedDatumPocetka = danasnjiDatum.format(formatter);
-        txtDatumPocetka.setText(formattedDatumPocetka);
+        txtDatumPocetka.setText(ugovor.getDatumPocetka().format(formatter));
+        txtDatumIsteka.setText(ugovor.getDatumIsteka().format(formatter));
         txtDatumPocetka.setEnabled(false);
-
-        //Datum isteka
-        LocalDate datumIstekaDefault = danasnjiDatum.plusYears(2);
-        String formattedDatumIsteka = datumIstekaDefault.format(formatter);
-        txtDatumIsteka.setText(formattedDatumIsteka);
         txtDatumIsteka.setEnabled(false);
 
         //Procenat popusta
@@ -91,17 +85,25 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         txtPopust.setText(popust + "%");
         txtPopust.setEnabled(false);
 
-        //Status ugovora
-        cbStatusUgovora.setSelectedItem(StatusUgovora.AKTIVAN);
-        cbStatusUgovora.setEnabled(false);
-
-        //Ukupna cena
+        //Status
+        cbStatusUgovora.setEnabled(true);
+        
+        //Cena
+        txtCena.setText(String.valueOf(ugovor.getUkupnaCena()));
         txtCena.setEnabled(false);
         
-        if (ugovor != null) {
-            //popuniZaIzmeni();
-        }
+        //stavke
+        ucitajStavkeUgovora();
+        TableModelStavkaUgovora tmsu = new TableModelStavkaUgovora(stavkeUgovora);
+        tblStavkeUgovora.setModel(tmsu);
     }
+      
+    private void ucitajStavkeUgovora() {
+        StavkaUgovora stavkaZaQuery = new StavkaUgovora();
+        stavkaZaQuery.setUgovor(ugovor);
+        stavkeUgovora = communication.vratiSveStavke(stavkaZaQuery);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,7 +121,6 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         txtDatumPocetka = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtDatumIsteka = new javax.swing.JTextField();
-        btnRucniUnos = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         txtPopust = new javax.swing.JTextField();
@@ -137,7 +138,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtCena = new javax.swing.JTextField();
-        btnKreirajUgovor = new javax.swing.JButton();
+        btnIzmeniUgovor = new javax.swing.JButton();
         btnOdustani = new javax.swing.JButton();
         cbStatusUgovora = new javax.swing.JComboBox<>();
 
@@ -150,13 +151,6 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         jLabel3.setText("Datum pocetka ugovorne obaveze:");
 
         jLabel4.setText("Datum isteka ugovorne obaveze:");
-
-        btnRucniUnos.setText("Rucni unos");
-        btnRucniUnos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRucniUnosActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Procenat popusta:");
 
@@ -209,10 +203,10 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
         jLabel11.setText("Ukupna cena:");
 
-        btnKreirajUgovor.setText("Kreiraj ugovor");
-        btnKreirajUgovor.addActionListener(new java.awt.event.ActionListener() {
+        btnIzmeniUgovor.setText("Izmeni ugovor");
+        btnIzmeniUgovor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKreirajUgovorActionPerformed(evt);
+                btnIzmeniUgovorActionPerformed(evt);
             }
         });
 
@@ -245,9 +239,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtDatumPocetka)
-                                    .addComponent(txtDatumIsteka, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRucniUnos, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDatumIsteka, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -286,7 +278,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                                     .addComponent(cbStatusUgovora, 0, 256, Short.MAX_VALUE)
                                     .addComponent(txtCena))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnKreirajUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnIzmeniUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -304,17 +296,14 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(txtPopust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtDatumIsteka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnRucniUnos, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtDatumIsteka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -348,7 +337,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
                             .addComponent(txtCena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(btnKreirajUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnIzmeniUgovor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btnOdustani)
                 .addGap(29, 29, 29))
@@ -356,11 +345,6 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRucniUnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRucniUnosActionPerformed
-        txtDatumPocetka.setEnabled(true);
-        txtDatumIsteka.setEnabled(true);
-    }//GEN-LAST:event_btnRucniUnosActionPerformed
 
     private void cbTipPaketaUslugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipPaketaUslugaActionPerformed
         List<PaketUsluga> paketi = communication.vratiSvePakete();
@@ -390,6 +374,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         StavkaUgovora novaStavkaUgovora = new StavkaUgovora();
         novaStavkaUgovora.setPaketUsluga(odabraniPaket);
         novaStavkaUgovora.setFinalnaCena(cenaSaPopustom);
+        novaStavkaUgovora.setUgovor(ugovor);
         if (stavkeUgovora.contains(novaStavkaUgovora)) {
             JOptionPane.showMessageDialog(this, "Ovaj paket vec postoji", "Greska", JOptionPane.ERROR_MESSAGE);
             return;
@@ -411,13 +396,12 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
             return;
         }
         StavkaUgovora ukloniStavka = tmsu.getStavke().get(red);
-        System.out.println(ukloniStavka);
         stavkeUgovora.remove(ukloniStavka);
         popuniTabeluStavkeUgovora();
         izracunajCenuUgovora();
     }//GEN-LAST:event_btnUkloniStavkuActionPerformed
 
-    private void btnKreirajUgovorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajUgovorActionPerformed
+    private void btnIzmeniUgovorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniUgovorActionPerformed
         if (stavkeUgovora.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ugovor mora imati barem jednu stavku", "Greska", JOptionPane.ERROR_MESSAGE);
             return;
@@ -449,22 +433,21 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
         StatusUgovora status = (StatusUgovora) cbStatusUgovora.getSelectedItem();
 
-        Ugovor ugovor = new Ugovor(zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena, status);
-        UgovorSaStavkama ugovorSaStavkama = new UgovorSaStavkama(ugovor, stavkeUgovora);
-        int result = communication.dodajUgovorSaStavkama(ugovorSaStavkama);
+        Ugovor noviUgovor = new Ugovor(this.ugovor.getIdUgovor(),zaposleni, klijent, datumPocetka, datumIsteka, trajanjeMeseci, ukupnaCena, status);
+        UgovorSaStavkama ugovorSaStavkama = new UgovorSaStavkama(noviUgovor, stavkeUgovora);
+        int result = communication.izmeniUgovorSaStavkama(ugovorSaStavkama);
         if (result != 0) {
-            JOptionPane.showMessageDialog(this, "Ugovor uspesno kreiran", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ugovor uspesno izmenjen", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Greska prilikom kreiranja ugovora", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greska prilikom izmene ugovora", "Greska", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnKreirajUgovorActionPerformed
+    }//GEN-LAST:event_btnIzmeniUgovorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajStavku;
-    private javax.swing.JButton btnKreirajUgovor;
+    private javax.swing.JButton btnIzmeniUgovor;
     private javax.swing.JButton btnOdustani;
-    private javax.swing.JButton btnRucniUnos;
     private javax.swing.JButton btnUkloniStavku;
     private javax.swing.JComboBox<model.PaketUsluga> cbPaketiUsluga;
     private javax.swing.JComboBox<model.StatusUgovora> cbStatusUgovora;

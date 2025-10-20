@@ -41,8 +41,6 @@
                                   <Component id="txtDatumPocetka" max="32767" attributes="0"/>
                                   <Component id="txtDatumIsteka" pref="193" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnRucniUnos" min="-2" pref="101" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -92,7 +90,7 @@
                                   <Component id="txtCena" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnKreirajUgovor" min="-2" pref="153" max="-2" attributes="0"/>
+                              <Component id="btnIzmeniUgovor" min="-2" pref="153" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -118,21 +116,16 @@
                   <Component id="txtPopust" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtDatumPocetka" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtDatumIsteka" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="btnRucniUnos" pref="51" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDatumPocetka" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDatumIsteka" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
@@ -172,7 +165,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Component id="btnKreirajUgovor" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="btnIzmeniUgovor" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="34" max="32767" attributes="0"/>
@@ -210,14 +203,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDatumIsteka">
-    </Component>
-    <Component class="javax.swing.JButton" name="btnRucniUnos">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Rucni unos"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRucniUnosActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
@@ -327,12 +312,12 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtCena">
     </Component>
-    <Component class="javax.swing.JButton" name="btnKreirajUgovor">
+    <Component class="javax.swing.JButton" name="btnIzmeniUgovor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Kreiraj ugovor"/>
+        <Property name="text" type="java.lang.String" value="Izmeni ugovor"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKreirajUgovorActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniUgovorActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnOdustani">

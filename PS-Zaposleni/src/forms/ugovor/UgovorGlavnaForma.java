@@ -118,7 +118,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
             }
         });
 
-        btnIzmeniStatus.setText("Izmeni status");
+        btnIzmeniStatus.setText("Izmeni ugovor");
         btnIzmeniStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIzmeniStatusActionPerformed(evt);
@@ -273,7 +273,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
             return;
         }
         Ugovor ugovor = tmu.getUgovori().get(red);
-        KreirajUgovorForma izmeniUgovorForma = new KreirajUgovorForma(zaposleni, ugovor.getKlijent(), ugovor);
+        IzmeniUgovorForma izmeniUgovorForma = new IzmeniUgovorForma(zaposleni, ugovor.getKlijent(), ugovor);
         izmeniUgovorForma.setVisible(true);
         osveziTabeluUgovori();
     }//GEN-LAST:event_btnIzmeniStatusActionPerformed

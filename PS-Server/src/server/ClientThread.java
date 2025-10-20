@@ -115,10 +115,11 @@ public class ClientThread extends Thread {
                     response.setParams(controller.vratiSve(new Ugovor()));
                     break;
                 case Operacija.VRATI_SVE_STAVKE:
-                    response.setParams(controller.vratiSve(new StavkaUgovora()));
+                    response.setParams(controller.vratiSve((StavkaUgovora) request.getParams()));
                     break;
                 case Operacija.IZMENI_UGOVOR:
-                    response.setParams(controller.izmeni((Ugovor) request.getParams()));
+                    UgovorSaStavkama ugovorSaStavkamaIzmena = (UgovorSaStavkama) request.getParams();
+                    response.setParams(controller.izmeniUgovor(ugovorSaStavkamaIzmena.getUgovor(), ugovorSaStavkamaIzmena.getStavke()));
                     break;
                 case Operacija.VRATI_SVE_RADNO_VREME:
                     response.setParams(controller.vratiSve(new RadnoVreme()));

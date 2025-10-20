@@ -66,8 +66,8 @@ public class Communication {
         return (List<Ugovor>) response.getParams();
     }
     
-    public List<StavkaUgovora> vratiSveStavke() {
-        Request request = new Request(null, Operacija.VRATI_SVE_STAVKE);
+    public List<StavkaUgovora> vratiSveStavke(StavkaUgovora stavka) {
+        Request request = new Request(stavka, Operacija.VRATI_SVE_STAVKE);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (List<StavkaUgovora>) response.getParams();

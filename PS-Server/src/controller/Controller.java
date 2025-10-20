@@ -12,6 +12,7 @@ import model.StavkaUgovora;
 import model.Ugovor;
 import model.helper.UlogovaniZaposleni;
 import operacije.IzmeniSO;
+import operacije.IzmeniUgovorSO;
 import operacije.KreirajSO;
 import operacije.KreirajUgovorSO;
 import operacije.ObrisiSO;
@@ -88,6 +89,15 @@ public class Controller {
             return (int) new KreirajUgovorSO(listaStavki).execute(u);
         } catch (Exception ex) {
             System.out.println("Greska prilikom izvrsavanja kreirajUgovorSO: " + ex.getMessage());
+        }
+        return 0;
+    }
+    
+    public int izmeniUgovor(Ugovor u, List<StavkaUgovora> listaStavki) {
+        try {
+            return (int) new IzmeniUgovorSO(listaStavki).execute(u);
+        } catch (Exception ex) {
+            System.out.println("Greska prilikom izvrsavanja izmeniUgovorSO: " + ex.getMessage());
         }
         return 0;
     }

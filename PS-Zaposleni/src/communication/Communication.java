@@ -160,6 +160,13 @@ public class Communication {
         Response response = (Response) receiver.receive();
         return (int) response.getParams();
     }
+    
+    public int izmeniUgovorSaStavkama(UgovorSaStavkama ugovorSaStavkama) {
+        Request request = new Request(ugovorSaStavkama, Operacija.IZMENI_UGOVOR);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        return (int) response.getParams();
+    }
 
     public List<Ugovor> vratiSveUgovore() {
         Request request = new Request(null, Operacija.VRATI_SVE_UGOVORE);
@@ -168,18 +175,11 @@ public class Communication {
         return (List<Ugovor>) response.getParams();
     }
 
-    public List<StavkaUgovora> vratiSveStavke() {
-        Request request = new Request(null, Operacija.VRATI_SVE_STAVKE);
+    public List<StavkaUgovora> vratiSveStavke(StavkaUgovora stavka) {
+        Request request = new Request(stavka, Operacija.VRATI_SVE_STAVKE);
         sender.send(request);
         Response response = (Response) receiver.receive();
         return (List<StavkaUgovora>) response.getParams();
-    }
-
-    public int izmeniUgovor(Ugovor ugovor) {
-        Request request = new Request(ugovor, Operacija.IZMENI_UGOVOR);
-        sender.send(request);
-        Response response = (Response) receiver.receive();
-        return (int) response.getParams();
     }
 
     //Radno vreme

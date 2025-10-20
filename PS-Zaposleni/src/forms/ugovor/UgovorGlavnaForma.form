@@ -159,7 +159,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnIzmeniStatus">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Izmeni status"/>
+        <Property name="text" type="java.lang.String" value="Izmeni ugovor"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIzmeniStatusActionPerformed"/>
