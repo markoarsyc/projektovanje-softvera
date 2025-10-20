@@ -106,16 +106,20 @@ public class ZaposleniLoginForma extends javax.swing.JFrame {
         Zaposleni zaposleni = new Zaposleni();
         String email = txtEmail.getText();
         String password = String.valueOf(passwordField.getPassword());
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email i lozinka moraju imati vrednost", "Greška", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         zaposleni.setEmail(email);
         zaposleni.setLozinka(password);
         Zaposleni ulogovani = communication.login(zaposleni);
         if (ulogovani != null) {
-            JOptionPane.showMessageDialog(this, "Email i lozinka su ispravni", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email i lozinka su ispravni", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             gf = new ZaposleniGlavnaForma(ulogovani);
             gf.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Email i lozinka nisu ispravni ili ste vec prijavljeni", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email i lozinka nisu ispravni ili ste već prijavljeni", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPrijavaActionPerformed
 

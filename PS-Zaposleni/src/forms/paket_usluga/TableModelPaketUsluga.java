@@ -13,7 +13,7 @@ import model.PaketUsluga;
  * @author Marko
  */
 public class TableModelPaketUsluga extends AbstractTableModel {
-    private String[] kolone = {"id", "Tip", "Naziv", "Mesecna cena"};
+    private String[] kolone = {"id", "Tip", "Naziv", "Mesečna cena"};
     private List<PaketUsluga> paketi;
     
     public TableModelPaketUsluga(List<PaketUsluga> paketi) {

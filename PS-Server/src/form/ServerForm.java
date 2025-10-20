@@ -4,10 +4,15 @@
  */
 package form;
 
+import config.FileReader;
+import config.FileWriterConfig;
 import controller.Controller;
-import java.awt.ComponentOrientation;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import model.Zaposleni;
 import model.helper.UlogovaniZaposleni;
@@ -33,6 +38,7 @@ public class ServerForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         btnStopServer.setEnabled(false);
         popuniListuZaposleni();
+        ucitajKonfiguraciju();
         StatusThread statusNit = new StatusThread(this);
         statusNit.start();
     }
@@ -42,11 +48,30 @@ public class ServerForm extends javax.swing.JFrame {
         this.sviZaposleni = sviZaposleni;
     }
 
+    private void ucitajKonfiguraciju() {
+        txtUrl.setEnabled(false);
+        txtKorisnickoIme.setEnabled(false);
+        txtLozinka.setEnabled(false);
+        txtPort.setEnabled(false);
+        btnIzmeniKonfig.setVisible(false);
+        FileReader fileReader = new FileReader();
+        try {
+            fileReader.readFile("server.config");
+        } catch (IOException ex) {
+            System.out.println("Greska prilikom ucitavanja iz server config");
+            return;
+        }
+        txtUrl.setText(fileReader.getConnectionUrl());
+        txtKorisnickoIme.setText(fileReader.getUser());
+        txtLozinka.setText(fileReader.getPassword());
+        txtPort.setText(String.valueOf(fileReader.getPort()));
+    }
+
     private void toggleServerButtons() {
         btnStartServer.setEnabled(!btnStartServer.isEnabled());
         btnStopServer.setEnabled(!btnStopServer.isEnabled());
         if (server == null || !server.isAlive()) {
-            lblStatusServera.setText("Status servera: ISKLJUCEN");
+            lblStatusServera.setText("Status servera: ISKLJUČEN");
         } else {
             lblStatusServera.setText("Status servera: POKRENUT");
         }
@@ -84,6 +109,18 @@ public class ServerForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblZaposleni = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtUrl = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtKorisnickoIme = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtLozinka = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtPort = new javax.swing.JTextField();
+        btnRezimIzmene = new javax.swing.JButton();
+        btnIzmeniKonfig = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,7 +139,7 @@ public class ServerForm extends javax.swing.JFrame {
         });
 
         lblStatusServera.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblStatusServera.setText("Status servera: ISKLJUCEN");
+        lblStatusServera.setText("Status servera: ISKLJUČEN");
 
         tblZaposleni.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,6 +157,31 @@ public class ServerForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Zaposleni");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Konfiguracija servera");
+
+        jLabel3.setText("URL za konekciju ka bazi:");
+
+        jLabel4.setText("Korisničko ime:");
+
+        jLabel5.setText("Lozinka za bazu:");
+
+        jLabel6.setText("Broj porta:");
+
+        btnRezimIzmene.setText("Režim izmene");
+        btnRezimIzmene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRezimIzmeneActionPerformed(evt);
+            }
+        });
+
+        btnIzmeniKonfig.setText("Izmeni konfiguraciju");
+        btnIzmeniKonfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniKonfigActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,6 +196,14 @@ public class ServerForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jSeparator1)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator2)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -141,12 +211,26 @@ public class ServerForm extends javax.swing.JFrame {
                         .addComponent(lblStatusServera, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnRezimIzmene)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                                .addComponent(btnIzmeniKonfig))
+                            .addComponent(txtUrl)
+                            .addComponent(txtKorisnickoIme)
+                            .addComponent(txtLozinka)
+                            .addComponent(txtPort))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +247,31 @@ public class ServerForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtUrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtKorisnickoIme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtLozinka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRezimIzmene)
+                    .addComponent(btnIzmeniKonfig))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -188,6 +296,36 @@ public class ServerForm extends javax.swing.JFrame {
             System.out.println("Server vec nije aktivan.");
         }
     }//GEN-LAST:event_btnStopServerActionPerformed
+
+    private void btnRezimIzmeneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRezimIzmeneActionPerformed
+        txtUrl.setEnabled(true);
+        txtKorisnickoIme.setEnabled(true);
+        txtLozinka.setEnabled(true);
+        txtPort.setEnabled(true);
+        btnIzmeniKonfig.setVisible(true);
+        btnRezimIzmene.setVisible(false);
+    }//GEN-LAST:event_btnRezimIzmeneActionPerformed
+
+    private void btnIzmeniKonfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniKonfigActionPerformed
+        int port;
+        try {
+            port = Integer.parseInt(txtPort.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Port mora biti broj", "Greška",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String connectionUrl = txtUrl.getText();
+        String user = txtKorisnickoIme.getText();
+        String password = txtLozinka.getText();
+        FileWriterConfig fileWriter = new FileWriterConfig(port, connectionUrl, user, password);
+        try {
+            fileWriter.writeFile("server.config");
+        } catch (IOException ex) {
+            System.out.println("Greska prilikom upisivanja u fajl: " + ex.getMessage());
+        }
+        btnRezimIzmene.setVisible(true);
+        ucitajKonfiguraciju();
+    }//GEN-LAST:event_btnIzmeniKonfigActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,12 +363,24 @@ public class ServerForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIzmeniKonfig;
+    private javax.swing.JButton btnRezimIzmene;
     private javax.swing.JButton btnStartServer;
     private javax.swing.JButton btnStopServer;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblStatusServera;
     private javax.swing.JTable tblZaposleni;
+    private javax.swing.JTextField txtKorisnickoIme;
+    private javax.swing.JTextField txtLozinka;
+    private javax.swing.JTextField txtPort;
+    private javax.swing.JTextField txtUrl;
     // End of variables declaration//GEN-END:variables
 }

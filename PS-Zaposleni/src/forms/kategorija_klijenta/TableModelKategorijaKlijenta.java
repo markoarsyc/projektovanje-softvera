@@ -14,7 +14,7 @@ import model.KategorijaKlijenta;
  */
 public class TableModelKategorijaKlijenta extends AbstractTableModel {
 
-    private String[] kolone = {"id", "naziv", "popust (%)"};
+    private String[] kolone = {"id", "Naziv", "Popust (%)"};
     private List<KategorijaKlijenta> kategorijeKlijenta;
 
     public TableModelKategorijaKlijenta(List<KategorijaKlijenta> kategorijeKlijenta) {

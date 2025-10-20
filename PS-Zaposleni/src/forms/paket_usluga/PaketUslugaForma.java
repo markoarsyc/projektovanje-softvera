@@ -21,6 +21,11 @@ public class PaketUslugaForma extends javax.swing.JFrame {
      */
     private Communication communication = Communication.getInstance();
     private DodajIzmeniPaketUslugaForma formaPaketDodajIzmeni;
+    private List<PaketUsluga> paketi;
+
+    public List<PaketUsluga> getPaketi() {
+        return paketi;
+    }
 
     public PaketUslugaForma() {
         initComponents();
@@ -31,7 +36,7 @@ public class PaketUslugaForma extends javax.swing.JFrame {
     }
 
     public void popuniTabeluPaketiUsluga() {
-        List<PaketUsluga> paketi = communication.vratiSvePakete();
+        paketi = communication.vratiSvePakete();
         if (paketi != null) {
             TableModelPaketUsluga tmpu = new TableModelPaketUsluga(paketi);
             tblPaketUsluga.setModel(tmpu);
@@ -83,7 +88,7 @@ public class PaketUslugaForma extends javax.swing.JFrame {
             }
         });
 
-        btnObrisi.setText("Obrisi");
+        btnObrisi.setText("Obriši");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
@@ -141,7 +146,7 @@ public class PaketUslugaForma extends javax.swing.JFrame {
         TableModelPaketUsluga tmpu = (TableModelPaketUsluga) tblPaketUsluga.getModel();
         int red = tblPaketUsluga.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         PaketUsluga paket = tmpu.getPaketi().get(red);
@@ -157,17 +162,17 @@ public class PaketUslugaForma extends javax.swing.JFrame {
         TableModelPaketUsluga tmpu = (TableModelPaketUsluga) tblPaketUsluga.getModel();
         int red = tblPaketUsluga.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         PaketUsluga paket = tmpu.getPaketi().get(red);
-        int choice = JOptionPane.showConfirmDialog(this, "Da li ste sigurni da zelite da obrisete paket?", "Brisanje", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Da li ste sigurni da želite da obrišete paket?", "Brisanje", JOptionPane.YES_NO_OPTION);
         if (choice == 0) {
             int result = communication.obrisiPaketUsluga(paket);
             if (result == 0) {
-                JOptionPane.showMessageDialog(this, "Doslo je do greske prilikom brisanja paketa", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Došlo je do greške prilikom brisanja paketa", "Greška", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Brisanje paketa uspesno izvrseno", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Brisanje paketa uspešno izvršeno", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
             }
             popuniTabeluPaketiUsluga();
         }

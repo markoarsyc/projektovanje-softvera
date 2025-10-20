@@ -46,7 +46,7 @@ public class Communication {
             receiver = new Receiver(socket);
             sender = new Sender(socket);
         } catch (IOException ex) {
-            System.out.println("Greska prilikom povezivanja na server: " + ex.getMessage());
+            System.out.println("Greška prilikom povezivanja na server: " + ex.getMessage());
         }
     }
 

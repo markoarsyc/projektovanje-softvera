@@ -14,7 +14,7 @@ import model.Ugovor;
  * @author Marko
  */
 public class TableModelUgovor extends AbstractTableModel {
-    private String[] kolone = {"Id","Pocetak","Kraj","Trajanje (meseci)", "Cena (RSD/mes)", "Status"};
+    private String[] kolone = {"Id","Početak","Kraj","Trajanje (meseci)", "Cena (RSD/mes)", "Status"};
     private List<Ugovor> ugovori;
     public TableModelUgovor(List<Ugovor> ugovori) {
         this.ugovori = ugovori;

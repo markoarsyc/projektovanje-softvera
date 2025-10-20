@@ -382,7 +382,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         int procenatPopusta = klijent.getKategorija().getProcenatPopusta();
         PaketUsluga odabraniPaket = (PaketUsluga) cbPaketiUsluga.getSelectedItem();
         if (odabraniPaket == null) {
-            JOptionPane.showMessageDialog(this, "Morate prvo odabrati paket", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate prvo odabrati paket", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         double osnovnaCenaPaketa = odabraniPaket.getCenaMesec();
@@ -391,7 +391,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         novaStavkaUgovora.setPaketUsluga(odabraniPaket);
         novaStavkaUgovora.setFinalnaCena(cenaSaPopustom);
         if (stavkeUgovora.contains(novaStavkaUgovora)) {
-            JOptionPane.showMessageDialog(this, "Ovaj paket vec postoji", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ovaj paket već postoji", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         stavkeUgovora.add(novaStavkaUgovora);
@@ -407,7 +407,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         TableModelStavkaUgovora tmsu = (TableModelStavkaUgovora) tblStavkeUgovora.getModel();
         int red = tblStavkeUgovora.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         StavkaUgovora ukloniStavka = tmsu.getStavke().get(red);
@@ -419,7 +419,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
     private void btnKreirajUgovorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajUgovorActionPerformed
         if (stavkeUgovora.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ugovor mora imati barem jednu stavku", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ugovor mora imati barem jednu stavku", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -431,15 +431,15 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
             datumPocetka = LocalDate.parse(datumPocetkaStr, formatter);
             datumIsteka = LocalDate.parse(datumIstekaStr, formatter);
             if (datumPocetka.isBefore(LocalDate.now())) {
-                JOptionPane.showMessageDialog(this, "Datum pocetka ne moze biti u proslosti", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Datum početka ne moze biti u prošlosti", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (datumIsteka.isBefore(datumPocetka)) {
-                JOptionPane.showMessageDialog(this, "Datum isteka ne moze biti pre datuma pocetka", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Datum isteka ne može biti pre datuma početka", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -453,10 +453,10 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
         UgovorSaStavkama ugovorSaStavkama = new UgovorSaStavkama(ugovor, stavkeUgovora);
         int result = communication.dodajUgovorSaStavkama(ugovorSaStavkama);
         if (result != 0) {
-            JOptionPane.showMessageDialog(this, "Ugovor uspesno kreiran", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ugovor uspešno kreiran", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Greska prilikom kreiranja ugovora", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom kreiranja ugovora", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnKreirajUgovorActionPerformed
 

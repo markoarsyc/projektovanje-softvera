@@ -205,13 +205,19 @@ public class DodajIzmeniKlijentForma extends javax.swing.JFrame {
         String telefon = txtTelefon.getText();
         KategorijaKlijenta kategorija = (KategorijaKlijenta) cbKategorija.getSelectedItem();
         if (ime.isEmpty() || prezime.isEmpty() || email.isEmpty() || lozinka.isEmpty() || telefon.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Sve polja moraju biti popunjena", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        Klijent klijent = new Klijent(ime, prezime, email, lozinka, telefon, kategorija);
-        int result = communication.dodajKlijenta(klijent);
+        Klijent noviKlijent = new Klijent(ime, prezime, email, lozinka, telefon, kategorija);
+        for (Klijent gfKlijent : glavnaFormaKlijent.getKlijenti()) {
+            if (gfKlijent.getEmail().equals(noviKlijent.getEmail())) {
+                JOptionPane.showMessageDialog(this, "Već postoji klijent sa ovim emailom", "Greška", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        int result = communication.dodajKlijenta(noviKlijent);
         if (result == 0) {
-            JOptionPane.showMessageDialog(this, "Greska prilikom dodavanja klijenta", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom dodavanja klijenta", "Greška", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Uspesno dodavanje klijenta", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
             glavnaFormaKlijent.popuniTabeluKlijenti();
@@ -231,14 +237,14 @@ public class DodajIzmeniKlijentForma extends javax.swing.JFrame {
         String telefon = txtTelefon.getText();
         KategorijaKlijenta kategorija = (KategorijaKlijenta) cbKategorija.getSelectedItem();
         if (ime.isEmpty() || prezime.isEmpty() || email.isEmpty() || lozinka.isEmpty() || telefon.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Sve polja moraju biti popunjena", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sva polja moraju biti popunjena", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Klijent noviKlijent = new Klijent(klijent.getIdKlijent(),ime, prezime, email, lozinka, telefon, kategorija);
         int result = communication.izmeniKlijenta(noviKlijent);
         System.out.println(result);
         if (result == 0) {
-            JOptionPane.showMessageDialog(this, "Greska prilikom izmene podataka klijenta", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom izmene podataka klijenta", "Greška", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Uspesna izmena podataka klijenta", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
             glavnaFormaKlijent.popuniTabeluKlijenti();

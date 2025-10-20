@@ -21,6 +21,11 @@ public class KategorijaKlijentaForma extends javax.swing.JFrame {
      */
     private Communication communication = Communication.getInstance();
     private DodajIzmeniKategorijaKlijentaForma formaKategorijaDodajIzmeni;
+    private List<KategorijaKlijenta> kategorije;
+
+    public List<KategorijaKlijenta> getKategorije() {
+        return kategorije;
+    }
 
     public KategorijaKlijentaForma() {
         initComponents();
@@ -31,7 +36,7 @@ public class KategorijaKlijentaForma extends javax.swing.JFrame {
     }
 
     public void popuniTabeluKategorijaKlijenta() {
-        List<KategorijaKlijenta> kategorije = communication.vratiSveKategorijeKlijenta();
+        kategorije = communication.vratiSveKategorijeKlijenta();
         if (kategorije != null) {
             TableModelKategorijaKlijenta tmkk = new TableModelKategorijaKlijenta(kategorije);
             tblKategorijeKlijenta.setModel(tmkk);
@@ -83,7 +88,7 @@ public class KategorijaKlijentaForma extends javax.swing.JFrame {
             }
         });
 
-        btnObrisi.setText("Obrisi");
+        btnObrisi.setText("Obriši");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
@@ -145,7 +150,7 @@ public class KategorijaKlijentaForma extends javax.swing.JFrame {
         TableModelKategorijaKlijenta tmkk = (TableModelKategorijaKlijenta) tblKategorijeKlijenta.getModel();
         int red = tblKategorijeKlijenta.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         KategorijaKlijenta kategorija = tmkk.getKategorijeKlijenta().get(red);
@@ -181,7 +186,7 @@ public class KategorijaKlijentaForma extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Brisanje kategorije klijenta uspešno izvršeno.",
+                        "Brisanje kategorije klijenta Uspešno izvršeno.",
                         "Uspešno",
                         JOptionPane.INFORMATION_MESSAGE);
             }

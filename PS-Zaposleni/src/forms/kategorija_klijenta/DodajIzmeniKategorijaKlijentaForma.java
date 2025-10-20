@@ -144,7 +144,7 @@ public class DodajIzmeniKategorijaKlijentaForma extends javax.swing.JFrame {
     private void btnDodajKategorijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajKategorijuActionPerformed
         String naziv = txtNaziv.getText();
         if (naziv.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Kategorija mora imati naziv", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Kategorija mora imati naziv", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -152,22 +152,26 @@ public class DodajIzmeniKategorijaKlijentaForma extends javax.swing.JFrame {
         try {
             popust = Integer.parseInt(txtPopust.getText());
             if (popust < 0) {
-                JOptionPane.showMessageDialog(this, "Popust mora biti pozitivan broj", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Popust mora biti pozitivan broj", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Popust mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Popust mora biti broj", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         KategorijaKlijenta kategorija = new KategorijaKlijenta(naziv, popust);
+        if (glavnaForma.getKategorije().contains(kategorija)) {
+            JOptionPane.showMessageDialog(this, "Već postoji kategorija sa ovim nazivom","Greška", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         int result = communication.dodajKategorijuKlijenta(kategorija);
 
         if (result == 0) {
-            JOptionPane.showMessageDialog(this, "Greska prilikom dodavanja kategorije", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom dodavanja kategorije", "Greška", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Uspesno dodavanje kategorije", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešno dodavanje kategorije", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             glavnaForma.popuniTabeluKategorijaKlijenta();
             this.dispose();
         }
@@ -176,7 +180,7 @@ public class DodajIzmeniKategorijaKlijentaForma extends javax.swing.JFrame {
     private void btnIzmeniKategorijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniKategorijuActionPerformed
         String noviNaziv = txtNaziv.getText();
         if (noviNaziv.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Kategorija mora imati naziv", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Kategorija mora imati naziv", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -184,11 +188,11 @@ public class DodajIzmeniKategorijaKlijentaForma extends javax.swing.JFrame {
         try {
             noviPopust = Integer.parseInt(txtPopust.getText());
             if (noviPopust <= 0) {
-                JOptionPane.showMessageDialog(this, "Popust mora biti pozitivan broj", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Popust mora biti pozitivan broj", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Popust mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Popust mora biti broj", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -200,9 +204,9 @@ public class DodajIzmeniKategorijaKlijentaForma extends javax.swing.JFrame {
 
         int result = communication.izmeniKategorijuKlijenta(novaKategorija);
         if (result == 0) {
-            JOptionPane.showMessageDialog(this, "Greska prilikom izmene kategorije", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom izmene kategorije", "Greška", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Uspesna izmena kategorije", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešna izmena kategorije", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             glavnaForma.popuniTabeluKategorijaKlijenta();
             this.dispose();
         }

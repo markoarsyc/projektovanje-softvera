@@ -5,6 +5,7 @@
 package forms.radno_vreme;
 
 import communication.Communication;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -59,7 +60,6 @@ public class RadnoVremeForma extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRadnoVreme = new javax.swing.JTable();
         btnDodaj = new javax.swing.JButton();
-        btnIzmeni = new javax.swing.JButton();
         btnObrisi = new javax.swing.JButton();
         btnKrajRada = new javax.swing.JButton();
 
@@ -88,14 +88,7 @@ public class RadnoVremeForma extends javax.swing.JFrame {
             }
         });
 
-        btnIzmeni.setText("Izmeni");
-        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIzmeniActionPerformed(evt);
-            }
-        });
-
-        btnObrisi.setText("Obrisi");
+        btnObrisi.setText("Obriši");
         btnObrisi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnObrisiActionPerformed(evt);
@@ -117,11 +110,9 @@ public class RadnoVremeForma extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnDodaj)
+                        .addComponent(btnDodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIzmeni)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnObrisi)
+                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnKrajRada, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,9 +129,8 @@ public class RadnoVremeForma extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDodaj)
-                    .addComponent(btnIzmeni)
-                    .addComponent(btnObrisi)
-                    .addComponent(btnKrajRada))
+                    .addComponent(btnKrajRada)
+                    .addComponent(btnObrisi))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -156,40 +146,27 @@ public class RadnoVremeForma extends javax.swing.JFrame {
         dodajIzmeniForma.setVisible(true);
     }//GEN-LAST:event_btnDodajActionPerformed
 
-    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
-        TableModelRadnoVreme tmrv = (TableModelRadnoVreme) tblRadnoVreme.getModel();
-        int red = tblRadnoVreme.getSelectedRow();
-        if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovati jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        RadnoVreme radnoVreme = tmrv.getRadnaVremena().get(red);
-        dodajIzmeniForma = new DodajIzmeniRadnoVremeForma(this, zaposleni, radnoVreme);
-        dodajIzmeniForma.setVisible(true);
-    }//GEN-LAST:event_btnIzmeniActionPerformed
-
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
         TableModelRadnoVreme tmrv = (TableModelRadnoVreme) tblRadnoVreme.getModel();
         int red = tblRadnoVreme.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovati jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate selektovati jedan red", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         RadnoVreme radnoVreme = tmrv.getRadnaVremena().get(red);
-        int choice = JOptionPane.showConfirmDialog(this, "Da li ste sigurni da zelite da obrisete radno vreme?", "Brisanje", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Da li ste sigurni da želite da obrišete radno vreme?", "Brisanje", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             int result = communication.obrisiRadnoVreme(radnoVreme);
             if (result == 0) {
-                JOptionPane.showMessageDialog(this, "Doslo je do greske prilikom brisanja radnog vremena", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Došlo je do greške prilikom brisanja radnog vremena", "Greška", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Radno vreme uspesno obrisano", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Radno vreme uspešno obrisano", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             }
             popuniTabeluRadnoVreme();
 }    }//GEN-LAST:event_btnObrisiActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
-    private javax.swing.JButton btnIzmeni;
     private javax.swing.JButton btnKrajRada;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JLabel jLabel1;

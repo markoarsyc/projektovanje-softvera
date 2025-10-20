@@ -170,21 +170,21 @@ public class DodajIzmeniRadnoVremeForma extends javax.swing.JFrame {
         try {
             datum = LocalDate.parse(datumStr, formatter);
             if (datum.isBefore(LocalDate.now())) {
-                JOptionPane.showMessageDialog(this, "Datum ne moze biti u proslosti", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Datum ne može biti u prošlosti", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         RadnoVreme novoRadnoVreme = new RadnoVreme(zaposleni, smena, datum);
         int result = communication.dodajRadnoVreme(novoRadnoVreme);
         if (result != 0) {
-            JOptionPane.showMessageDialog(this, "Uspesno dodavanje radnog vremena", "Upsesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešno dodavanje radnog vremena", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             glavnaFormaRV.popuniTabeluRadnoVreme();
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Greska prilikom dodavanja radnog vremena", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom dodavanja radnog vremena", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnDodajActionPerformed
 
@@ -196,21 +196,21 @@ public class DodajIzmeniRadnoVremeForma extends javax.swing.JFrame {
         try {
             datum = LocalDate.parse(datumStr, formatter);
             if (datum.isBefore(LocalDate.now())) {
-                JOptionPane.showMessageDialog(this, "Datum ne moze biti u proslosti", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Datum ne može biti u prošlosti", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (DateTimeParseException ex) {
-            JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         RadnoVreme novoRadnoVreme = new RadnoVreme(zaposleni, smena, datum);
         int result = communication.izmeniRadnoVreme(novoRadnoVreme);
         if (result != 0) {
-            JOptionPane.showMessageDialog(this, "Uspesna izmena radnog vremena", "Upsesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešna izmena radnog vremena", "Upsešno", JOptionPane.INFORMATION_MESSAGE);
             glavnaFormaRV.popuniTabeluRadnoVreme();
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Greska prilikom izmene radnog vremena", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom izmene radnog vremena", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIzmeniActionPerformed
 

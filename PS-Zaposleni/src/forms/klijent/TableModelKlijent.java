@@ -14,7 +14,7 @@ import model.Klijent;
  */
 public class TableModelKlijent extends AbstractTableModel {
 
-    private String[] kolone = {"ID", "Ime", "Prezime", "Email", "Lozinka", "Telefon", "Kategorija"};
+    private String[] kolone = {"ID", "Ime", "Prezime", "Email", "Telefon", "Kategorija"};
     private List<Klijent> klijenti;
 
     public TableModelKlijent(List<Klijent> klijenti) {
@@ -45,10 +45,8 @@ public class TableModelKlijent extends AbstractTableModel {
             case 3:
                 return k.getEmail();
             case 4:
-                return k.getLozinka();
-            case 5:
                 return k.getTelefon();
-            case 6:
+            case 5:
                 return (k.getKategorija() != null) ? k.getKategorija().getNaziv() : "N/A";
             default:
                 throw new AssertionError("Nepostojeca kolona!");

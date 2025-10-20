@@ -74,7 +74,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         try {
             datumIzLabel = LocalDate.parse(lblDatum.getText(), formatter);
         } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "Neispravan format datuma u labeli!", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Neispravan format datuma u labeli!", "Greška", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -238,7 +238,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             formaPaketUsluga = new PaketUslugaForma();
             formaPaketUsluga.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greška", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -249,7 +249,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             formaKategorijaKlijenta = new KategorijaKlijentaForma();
             formaKategorijaKlijenta.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greška", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -260,7 +260,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             formaKlijent = new KlijentForma();
             formaKlijent.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greška", JOptionPane.ERROR_MESSAGE);
 
         }
 
@@ -271,7 +271,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
             formaUgovor = new UgovorGlavnaForma(zaposleni);
             formaUgovor.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Trenutno nije Vase radno vreme", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnUgovoriActionPerformed
 
@@ -280,7 +280,7 @@ public class ZaposleniGlavnaForma extends javax.swing.JFrame {
         if (result) {
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Doslo je do greske prilikom odjave", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Došlo je do greške prilikom odjave", "Greška", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnKrajRadaActionPerformed
 

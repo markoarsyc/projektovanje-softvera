@@ -232,7 +232,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
         TableModelKlijent tmk = (TableModelKlijent) tblKlijenti.getModel();
         int red = tblKlijenti.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate prvo selektovani klijenta", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate prvo selektovani klijenta", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Klijent klijent = tmk.getKlijenti().get(red);
@@ -249,7 +249,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
         TableModelKlijent tmk = (TableModelKlijent) tblKlijenti.getModel();
         int red = tblKlijenti.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate prvo selektovani klijenta", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate prvo selektovani klijenta", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Klijent klijent = tmk.getKlijenti().get(red);
@@ -269,7 +269,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
         TableModelUgovor tmu = (TableModelUgovor) tblUgovori.getModel();
         int red = tblUgovori.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate prvo selektovani ugovor", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate prvo selektovani ugovor", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Ugovor ugovor = tmu.getUgovori().get(red);

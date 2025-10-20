@@ -22,7 +22,12 @@ public class KlijentForma extends javax.swing.JFrame {
      */
     private DodajIzmeniKlijentForma dodajIzmeniKlijentForma;
     private Communication communication = Communication.getInstance();
+    private List<Klijent> klijenti;
 
+    public List<Klijent> getKlijenti() {
+        return klijenti;
+    }
+    
     public KlijentForma() {
         initComponents();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,7 +37,7 @@ public class KlijentForma extends javax.swing.JFrame {
     }
 
     public void popuniTabeluKlijenti() {
-        List<Klijent> klijenti = communication.vratiSveKlijente();
+        klijenti = communication.vratiSveKlijente();
         if (klijenti != null) {
             TableModelKlijent tmk = new TableModelKlijent(klijenti);
             tblKlijenti.setModel(tmk);
@@ -180,7 +185,7 @@ public class KlijentForma extends javax.swing.JFrame {
         TableModelKlijent tmk = (TableModelKlijent) tblKlijenti.getModel();
         int red = tblKlijenti.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate selektovani jedan red", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Klijent klijent = tmk.getKlijenti().get(red);
@@ -217,7 +222,7 @@ public class KlijentForma extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "Brisanje klijenta uspešno izvršeno.",
+                        "Brisanje klijenta Uspešno izvršeno.",
                         "Uspešno",
                         JOptionPane.INFORMATION_MESSAGE);
             }

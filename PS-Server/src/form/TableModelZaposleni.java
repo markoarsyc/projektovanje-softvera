@@ -14,7 +14,7 @@ import model.helper.UlogovaniZaposleni;
  * @author Marko
  */
 public class TableModelZaposleni extends AbstractTableModel{
-    private String[] kolone = {"id","ime","prezime","email","lozinka","status"};
+    private String[] kolone = {"id","Ime","Prezime","Email","Status"};
     private List<UlogovaniZaposleni> zaposleniLista;
 
     public TableModelZaposleni(List<UlogovaniZaposleni> zaposleniLista) {
@@ -46,8 +46,6 @@ public class TableModelZaposleni extends AbstractTableModel{
             case 3:
                 return ulogovaniZaposleni.getZaposleni().getEmail();
             case 4:
-                return ulogovaniZaposleni.getZaposleni().getLozinka();
-            case 5:
                 return ulogovaniZaposleni.getStatus();
             default:
                 throw new AssertionError();

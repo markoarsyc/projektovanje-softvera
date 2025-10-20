@@ -275,13 +275,13 @@ public class GlavnaFormaKlijent extends javax.swing.JFrame {
 
         int result = communication.izmeniKlijenta(klijent);
         if (result != 0) {
-            JOptionPane.showMessageDialog(this, "Uspesna izmena podataka", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešna izmena podataka", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             klijent.setEmail(noviEmail);
             klijent.setLozinka(novaLozinka);
             klijent.setTelefon(noviTelefon);
             popuniInicijalno();
         } else {
-            JOptionPane.showMessageDialog(this, "Greska prilikom izmene podataka", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom izmene podataka", "Greška", JOptionPane.ERROR_MESSAGE);
             popuniInicijalno();
         }
     }//GEN-LAST:event_btnPotvrdiIzmenuActionPerformed
@@ -293,7 +293,7 @@ public class GlavnaFormaKlijent extends javax.swing.JFrame {
     private void btnPrikaziDetaljnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziDetaljnoActionPerformed
         Ugovor ugovor = (Ugovor) cbUgovori.getSelectedItem();
         if (ugovor == null) {
-            JOptionPane.showMessageDialog(this, "Morate izabrati ugovor", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate izabrati ugovor", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         FormaKlijentUgovor formaUgovor = new FormaKlijentUgovor(ugovor);

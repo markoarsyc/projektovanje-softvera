@@ -74,7 +74,7 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
 
         jLabel2.setText("Naziv:");
 
-        jLabel3.setText("Mesecna cena:");
+        jLabel3.setText("Mesečna cena:");
 
         btnDodajPaket.setText("Dodaj paket");
         btnDodajPaket.addActionListener(new java.awt.event.ActionListener() {
@@ -154,26 +154,30 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
         TipPaketaUsluga tip = (TipPaketaUsluga) cbTipoviPaketa.getSelectedItem();
         String naziv = txtNazivPaketa.getText();
         if (naziv.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Paket mora imati naziv", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Paket mora imati naziv", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         double cenaMesec = 0;
         try {
             cenaMesec = Double.parseDouble(txtCenaMesec.getText());
             if (cenaMesec < 0) {
-                JOptionPane.showMessageDialog(this, "Cena mora biti pozitivan broj", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cena mora biti pozitivan broj", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cena mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cena mora biti broj", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         PaketUsluga paket = new PaketUsluga(tip, naziv, cenaMesec);
+        if (glavnaFormaPaketUsluga.getPaketi().contains(paket)) {
+            JOptionPane.showMessageDialog(this, "Već postoji paket sa ovim nazivom", "Greška", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int result = communication.dodajPaketUsluga(paket);
         if (result == 0) {
-            JOptionPane.showMessageDialog(this, "Greska prilikom dodavanja paketa", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom dodavanja paketa", "Greška", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Uspesno dodavanje paketa", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešno dodavanje paketa", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             glavnaFormaPaketUsluga.popuniTabeluPaketiUsluga();
             this.dispose();
         }
@@ -186,27 +190,27 @@ public class DodajIzmeniPaketUslugaForma extends javax.swing.JFrame {
     private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
         String noviNaziv = txtNazivPaketa.getText();
         if (noviNaziv.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Paket mora imati naziv", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Paket mora imati naziv", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         double novaCena = 0;
         try {
             novaCena = Double.parseDouble(txtCenaMesec.getText());
             if (novaCena < 0) {
-                JOptionPane.showMessageDialog(this, "Cena mora biti pozitivan broj", "Greska", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cena mora biti pozitivan broj", "Greška", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cena mora biti broj", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cena mora biti broj", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         TipPaketaUsluga noviTip = (TipPaketaUsluga) cbTipoviPaketa.getSelectedItem();
         PaketUsluga noviPaket = new PaketUsluga(paket.getIdPaketUsluga(), noviTip, noviNaziv, novaCena);
         int result = communication.izmeniPaketUsluga(noviPaket);
         if (result == 0) {
-            JOptionPane.showMessageDialog(this, "Greska prilikom dodavanja paketa", "Greska", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Greška prilikom dodavanja paketa", "Greška", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Uspesna izmena paketa", "Uspesno", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Uspešna izmena paketa", "Uspešno", JOptionPane.INFORMATION_MESSAGE);
             glavnaFormaPaketUsluga.popuniTabeluPaketiUsluga();
             this.dispose();
         }
