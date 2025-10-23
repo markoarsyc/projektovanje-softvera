@@ -213,7 +213,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnRucniUnos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Rucni unos"/>
+        <Property name="text" type="java.lang.String" value="Ru&#x10d;ni unos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRucniUnosActionPerformed"/>

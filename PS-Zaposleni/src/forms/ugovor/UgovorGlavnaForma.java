@@ -125,7 +125,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
             }
         });
 
-        btnPrikaziUgovoreKlijenta.setText("Prikazi ugovore");
+        btnPrikaziUgovoreKlijenta.setText("Prikaži ugovore");
         btnPrikaziUgovoreKlijenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrikaziUgovoreKlijentaActionPerformed(evt);
@@ -247,6 +247,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
 
     private void btnPrikaziUgovoreKlijentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrikaziUgovoreKlijentaActionPerformed
         TableModelKlijent tmk = (TableModelKlijent) tblKlijenti.getModel();
+        
         int red = tblKlijenti.getSelectedRow();
         if (red == -1) {
             JOptionPane.showMessageDialog(this, "Morate prvo selektovani klijenta", "Greška", JOptionPane.ERROR_MESSAGE);
@@ -260,6 +261,11 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
                 filterUgovori.add(u);
             }
         }
+        
+        if (filterUgovori.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ne postoji nijedan ugovor za izabranog kliijenta", "Informacija", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
         TableModelUgovor tmu = new TableModelUgovor(filterUgovori);
         tblUgovori.setModel(tmu);
@@ -269,7 +275,7 @@ public class UgovorGlavnaForma extends javax.swing.JFrame {
         TableModelUgovor tmu = (TableModelUgovor) tblUgovori.getModel();
         int red = tblUgovori.getSelectedRow();
         if (red == -1) {
-            JOptionPane.showMessageDialog(this, "Morate prvo selektovani ugovor", "Greška", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Morate prvo selektovati ugovor", "Greška", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Ugovor ugovor = tmu.getUgovori().get(red);

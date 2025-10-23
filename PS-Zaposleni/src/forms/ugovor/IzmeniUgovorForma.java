@@ -414,14 +414,6 @@ public class IzmeniUgovorForma extends javax.swing.JFrame {
         try {
             datumPocetka = LocalDate.parse(datumPocetkaStr, formatter);
             datumIsteka = LocalDate.parse(datumIstekaStr, formatter);
-            if (datumPocetka.isBefore(LocalDate.now())) {
-                JOptionPane.showMessageDialog(this, "Datum početka ne može biti u prošlosti", "Greška", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (datumIsteka.isBefore(datumPocetka)) {
-                JOptionPane.showMessageDialog(this, "Datum isteka ne može biti pre datuma početka", "Greška", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(this, "Neispravan format datuma", "Greška", JOptionPane.ERROR_MESSAGE);
             return;

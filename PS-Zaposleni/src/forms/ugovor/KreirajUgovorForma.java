@@ -151,7 +151,7 @@ public class KreirajUgovorForma extends javax.swing.JFrame {
 
         jLabel4.setText("Datum isteka ugovorne obaveze:");
 
-        btnRucniUnos.setText("Rucni unos");
+        btnRucniUnos.setText("Ručni unos");
         btnRucniUnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRucniUnosActionPerformed(evt);

@@ -167,7 +167,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPrikaziUgovoreKlijenta">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Prikazi ugovore"/>
+        <Property name="text" type="java.lang.String" value="Prika&#x17e;i ugovore"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrikaziUgovoreKlijentaActionPerformed"/>
